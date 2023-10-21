@@ -1,0 +1,144 @@
+:root{
+  --pcolor: #00AD56;
+  --scolor: #cefde6;
+  /* --scolor: #FB907D; */
+}
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    color: #666666;
+    font-size: 14px;
+    line-height: 1.80857;
+    font-weight: normal;
+    overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+.button{
+  padding: 5px 10px;
+  border: none;
+  background-color: transparent;
+  border-radius: 5px;
+}
+.s-btn{
+  background-color: var(--scolor);
+  color: #fff;
+  border: 1px var(--scolor) solid;
+}
+.s-btn:hover{
+  background-color: #949494;
+  border: 1px #949494 solid;
+  color: #fff;
+}
+.primary-text{
+  color: var(--pcolor);
+}
+select{
+  font-size: inherit !important;
+  color: inherit !important;
+}
+
+a{
+  color: inherit;
+  text-decoration: none;
+}
+/* Loader */
+.preloader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    background-color: var(--pcolor);
+}
+.loader-wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+}
+ .loader-wrap::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    opacity: .8;
+    z-index: 1001;
+    background-color: var(--pcolor);
+    opacity: .5;
+} 
+.loader {
+    z-index: 1002;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    border: 3px solid;
+    border-color: #FFF #FFF transparent transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+  .loader::after,
+  .loader::before {
+    content: '';  
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    border: 3px solid;
+    border-color: transparent transparent #1a4117 #1a4117;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: rotationBack 0.5s linear infinite;
+    transform-origin: center center;
+  }
+  .loader::before {
+    width: 32px;
+    height: 32px;
+    border-color: #FFF #FFF transparent transparent;
+    animation: rotation 1.5s linear infinite;
+  }
+      
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  } 
+  @keyframes rotationBack {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+    
+
+
+.hidden{
+    display: none !important;
+}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/x-icon">
+    <title>Team Booster | Register</title>
+</head>
+<body class="main-body">
+    <div class="loader-wrap d-none">
+        <span class="loader"></span>
+    </div>
+    <header>
+        <div class="header">
+            <div class="logo"><a href="dashboard.html"><img src="./assets/img/logo.png" alt="logo" width="150"></a></div>
+            <div class="hamburger">
+                <button class="btn menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <section class="main-content">
+        <div class="container">
+            <div class="engage">
+                <div class="card">
+                    <div class="card-header">
+                      Engagement Task
+                    </div>
+                    <div class="card-body">
+                        <p>Like and follow business and organisations/top brands pages and earn. Download and preview apps, post comment, subscribe, join groups to earn. The more pages you like and follow/subscribe, the more you earn.</p>
+
+
+                        <h6 class="pt-3 text-primary">Available tasks</h6>
+                        <a href="tasks.html" class="">
+                            <div class="alert alert-primary" role="alert">                                
+                                <div class="product-list">
+                                    <img src="./assets/img/posting/mtn.jpg" class="product-img" alt="posting" width="40">
+                                    <span>MTN Nigeria - &#8358; 123.67</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="tasks.html" class="">
+                            <div class="alert alert-primary" role="alert">
+                                
+                                <div class="product-list">
+                                    <img src="./assets/img/posting/office.png" class="product-img" alt="posting" width="40">
+                                    <span>Tuface Idibia - &#8358; 200.00</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="tasks.html" class="">
+                            <div class="alert alert-primary" role="alert"> 
+                                <div class="product-list">
+                                    <img src="./assets/img/posting/office.png" class="product-img" alt="posting" width="40">
+                                    <span>Gucci - &#8358; 520.00</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                      Posting Task
+                    </div>
+                    <div class="card-body">
+                        <p>Earn by posting contents of businesses, organisations and top brands on your timeline.</p>
+
+                        <h6 class="pt-3 text-success">Available tasks</h6>
+                        <a href="posting.html" class="">
+                            <div class="alert alert-success" role="alert">
+                                <div class="product-list">
+                                    <img src="./assets/img/posting/airtel.jpeg" class="product-img" alt="posting" width="40">
+                                    <span>Airtel Nigeria - &#8358; 323.00<span>
+                                </div>                                
+                            </div>
+                        </a>
+                        <a href="posting.html" class="">
+                            <div class="alert alert-success" role="alert">
+                                <div class="product-list">
+                                    <img src="./assets/img/posting/office.png" class="product-img" alt="posting" width="40">
+                                    <span>Nigeria Brewery - &#8358; 350.00</span>
+                                </div> 
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer">
+          <p>  &copy; <span class="fyear"></span> Team Booster</p>
+        </div>
+    </footer>
+    <div class="menu d-none">
+        <button class="btn close-menu"><i class="fa-solid fa-times"></i></button>
+        <div class="menu-items">
+            <a href="./dashboard.html"><p>Dashboard</p></a>
+            <a href="?logout"><p>Logout</p></a>
+        </div>
+    </div>
+    <div class="menu-bg d-none"></div>
+
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script>
+        /*
+        const agentForm = document.getElementById("agent-form")
+        agentForm.onsubmit = (e)=>{
+            e.preventDefault()
+            showLoader()
+            ajax = new XMLHttpRequest()
+            ajax.onload = ()=>{
+                if(ajax.readyState == 4 && ajax.status == 200){
+                    if(parseInt(ajax.responseText)==1){
+                        hideLoader()
+                        notifyUser("success", "Successful");
+                        agentForm.reset()
+                    }else{
+                        hideLoader()
+                        notifyUser("danger", ajax.responseText);
+                    }
+                }
+            }
+            ajax.open("POST", "process.php", true)
+            const formData = new FormData(agentForm);
+            // console.log(formData)
+            ajax.send(formData)
+        }
+        */
+    </script>   
+</body>
+</html>

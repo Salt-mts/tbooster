@@ -1,0 +1,60 @@
+@import url("global.css");
+@import url("components/animation.css");
+@import url("components/main.css");
+@import url("components/home.css");
+
+.engage{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.product-list{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.product-img{
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+@media screen and (max-width:600px) {
+  .engage{
+    grid-template-columns: 1fr;
+  }
+  
+}
+
+
+.my-modal{
+  min-height: 200px;
+  min-width: 350px;
+  background-color: #fff;
+  position: fixed;
+  margin: auto;
+  top: 50px;
+  right: calc(50% - 175px);
+  z-index: 10;
+  border-radius: 10px;
+  overflow: auto;
+}
+.my-modal-bg{
+  height: 100vh;
+  width: 100%;
+  background-color: #272727;
+  position: fixed;
+  top: 0;
+  right: 0;
+  opacity: .6;
+  z-index: 9;
+}
+.close-my-modal{
+  position: absolute;
+  top: -50px;
+  right: 0;
+  color: #fff;
+  font-size: 25px;
+  z-index: 10;
+}

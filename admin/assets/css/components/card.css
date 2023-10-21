@@ -1,0 +1,98 @@
+
+.card_content__body__left{
+    display: flex;
+    flex-direction: column;
+}
+.credit-card{
+    width: 321px;
+    height: 207px;
+    border-radius: 10px;
+    /* background: rgb(124,136,157);
+    background: linear-gradient(90deg, #959697 0%, rgb(120, 137, 165) 100%);  */
+    background-color: var(--text-color);
+    background-image: url(../../img/card-bg.jpg);
+    background-size: cover;
+    background-position: 0 49px;
+    background-repeat: no-repeat;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.business-logo{
+    padding: 10px 0 0 20px;
+}
+.business-logo::after{
+    content: "";
+    position: absolute;
+    top: 45px;
+    left: 0px;
+    width: 100%;
+    height: 3px;
+    background-color: #fff;
+    opacity: .7;
+}
+.card-number{
+    margin-top: 50px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+    color: #352902;
+}
+.expire{
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+}
+.valid-thru{
+    font-size: 8px;
+    color: #fff;
+    text-transform: uppercase;
+}
+.expiry-date{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    font-weight: 700;
+    padding-left: 5px;
+    color: #352902;
+}
+.card-logo{
+    /* display: flex;
+    justify-content: end;
+    padding-right: 20px; */
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+}
+
+.card-details{
+    margin-bottom: 30px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 2px 4px 0 rgb(112 121 139 / 18%);
+    box-shadow: 0 2px 4px 0 rgb(112 121 139 / 18%);
+    background-color: #fff;
+    padding: 24px 24px 16px;
+    
+    margin-right: 26px;
+}
+.card-details h5{
+    margin-bottom: 30px;
+}
+.card-details-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.card-value{
+    font-size: 18px;
+}
+.card-detail p{
+    font-size: 12px;
+    color: var(--text-color);
+}
+
+@media only screen and (max-width: 600px){
+    .card-details{
+        margin-right: 0;
+    }
+}

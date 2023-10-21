@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/x-icon">
+    <title>Team Booster | Register</title>
+</head>
+<body class="main-body">
+    <div class="loader-wrap d-none">
+        <span class="loader"></span>
+    </div>
+    <header>
+        <div class="header">
+            <div class="logo"><a href="dashboard.html"><img src="./assets/img/logo.png" alt="logo" width="150"></a></div>
+            <div class="hamburger">
+                <button class="btn menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <section class="main-content">
+        <div class="container">
+            <div class="engage">
+                <div class="card">
+                    <div class="card-header">
+                        MTN Nigeria
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-primary" role="alert">
+                            <div class="task-icons">
+                                <small>Page Like, Follow and Subscribe <i>(click the icon to start)</i></small>
+                                <div class="like-icons task-icons">
+                                    <a href="#" target="_blank">
+                                        <img src="./assets/img/icons/social_facebook.png"  alt="icons" width="40">
+                                    </a>
+                                    <a href="#" target="_blank">
+                                        <img src="./assets/img/icons/social_x.png" alt="icons" width="40">
+                                    </a>
+                                    <a href="#" target="_blank">
+                                        <img src="./assets/img/icons/social_instagram.png" alt="icons" width="40">
+                                    </a>
+                                    <a href="#" target="_blank">
+                                        <img src="./assets/img/icons/social_linkedin.png" alt="icons" width="40">
+                                    </a>
+                                    <a href="#" target="_blank">
+                                        <img src="./assets/img/icons/social_youtube.png" alt="icons" width="40">
+                                    </a>
+                                    <a href="#" target="_blank">
+                                        <img src="./assets/img/icons/social_tiktok.png" alt="icons" width="40">
+                                    </a>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="task-icons">
+                                <small>Post likes and comments <i>(click the icon to start)</i></small>
+                                <div class="comment-icon task-icons">
+                                    <a href="#" target="_blank">
+                                        <img src="./assets/img/icons/social_facebook.png" alt="icons" width="40">
+                                    </a>
+                                    <a href="#" target="_blank">
+                                        <img src="./assets/img/icons/social_x.png" alt="icons" width="40">
+                                    </a>
+                                    <a href="#" target="_blank">
+                                        <img src="./assets/img/icons/social_instagram.png" alt="icons" width="40">
+                                    </a>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="task-icons">
+                                <small>Follow on Audiomack <i>(click the icon to start)</i></small>
+                                <div class="audiomack-icon task-icons">
+                                    <a href="#" target="_blank">
+                                        <img src="./assets/img/icons/audiomack.png" alt="icons" width="40">
+                                    </a>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="task-icons">
+                                <small>Download and preview app <i>(click the icon to start)</i></small>
+                                <div class="app-icon task-icons">
+                                    <a href="#" target="_blank">
+                                        <img src="./assets/img/icons/playstore.png" alt="icons" width="40">
+                                    </a>
+                                    <a href="#" target="_blank">
+                                        <img src="./assets/img/icons/appstore.png" alt="icons" width="40">
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <a href="#" class="btn btn-primary">I have completed this task</a>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer">
+          <p>  &copy; <span class="fyear"></span> Team Booster</p>
+        </div>
+    </footer>
+    <div class="menu d-none">
+        <button class="btn close-menu"><i class="fa-solid fa-times"></i></button>
+        <div class="menu-items">
+            <a href="./dashboard.html"><p>Dashboard</p></a>
+            <a href="?logout"><p>Logout</p></a>
+        </div>
+    </div>
+    <div class="menu-bg d-none"></div>
+
+    <!-- alert -->
+    <div class="notify"></div>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/content.js"></script>
+    <script>
+        /*
+        const agentForm = document.getElementById("agent-form")
+        agentForm.onsubmit = (e)=>{
+            e.preventDefault()
+            showLoader()
+            ajax = new XMLHttpRequest()
+            ajax.onload = ()=>{
+                if(ajax.readyState == 4 && ajax.status == 200){
+                    if(parseInt(ajax.responseText)==1){
+                        hideLoader()
+                        notifyUser("success", "Successful");
+                        agentForm.reset()
+                    }else{
+                        hideLoader()
+                        notifyUser("danger", ajax.responseText);
+                    }
+                }
+            }
+            ajax.open("POST", "process.php", true)
+            const formData = new FormData(agentForm);
+            // console.log(formData)
+            ajax.send(formData)
+        }
+        */
+    </script>   
+</body>
+</html>

@@ -1,0 +1,73 @@
+main{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background-image: url("../../img/main-bg.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+main::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: var(--scolor);
+    opacity: .8;
+    z-index: 2;
+}
+.main-select{
+    position: relative;
+    z-index: 5 !important;
+}
+.welcome{
+    color: var(--pcolor);
+    text-align: center;
+    padding: 0;
+}
+.selection{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.selection a{
+    text-decoration: none;
+}
+.select-box{
+    background-color: var(--pcolor);
+    color: #fff;
+    height: 150px;
+    width: 150px;
+    padding: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    font-weight: bold;
+}
+.sb-img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: auto;
+    object-fit: cover;
+}
+.sb-img img{
+    width: 50px;
+    height: 50px;
+}
+.sb-text{
+    text-align: center;
+}
+.sb-text h2{
+    font-size: 18px;
+    padding-top: 10px;
+}
+.sb-text p{
+    font-size: 10px;
+}
+

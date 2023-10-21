@@ -1,0 +1,95 @@
+@import url("global.css");
+@import url("components/animation.css");
+@import url("components/main.css");
+@import url("components/home.css");
+
+.hero{
+  background-color: #F0EEF1;
+}
+.hero-wrap, .about-wrap{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.hero-text .header{
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 35px;
+}
+.hero-img img{
+  margin: auto;
+}
+.hero-text{
+  padding-right: 40px;
+}
+.about{
+  padding: 50px 0;
+  background-color: #fff;
+}
+.about-div img{
+  width: 100%;
+}
+.about-text{
+  padding-right: 30px;
+}
+@media screen and (max-width:820px) {
+  .hero-text{
+    padding-right: 20px;
+  }
+  .hero-text .header{
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 28px;  
+  }
+  .about-text{
+    padding-right: 10px;
+  }
+}
+@media screen and (max-width:600px) {
+  .hero-wrap, .about-wrap{
+    grid-template-columns: 1fr;
+  }
+  .about-wrap.reverse{
+    grid-auto-flow: dense;
+  }
+  .about-wrap.reverse>.about-text {
+    grid-row: 2;
+    padding-top: 20px;
+  }
+  .hero-img img{
+    width: 100%;
+  }
+}
+
+
+.my-modal{
+  min-height: 200px;
+  width: 350px;
+  background-color: #fff;
+  position: fixed;
+  margin: auto;
+  top: 100px;
+  right: calc(50% - 175px);
+  z-index: 10;
+  border-radius: 10px;
+}
+.my-modal-bg{
+  height: 100vh;
+  width: 100%;
+  background-color: #272727;
+  position: fixed;
+  top: 0;
+  right: 0;
+  opacity: .6;
+  z-index: 9;
+}
+.close-my-modal{
+  position: absolute;
+  top: -50px;
+  right: 0;
+  color: #fff;
+  font-size: 25px;
+  z-index: 10;
+}
