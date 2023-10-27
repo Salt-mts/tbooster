@@ -1,3 +1,20 @@
+<?php
+require_once("includes/init.php");
+if(!logged_in()){
+    Helper::redirect("../login");
+}
+
+$kweri = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'others' AND schedule = '$schedule' AND status = 1 ORDER BY id DESC");
+$kweri->execute();
+$rowx = $kweri->fetchAll(PDO::FETCH_ASSOC);
+
+$query = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'posting' AND schedule = '$schedule' AND status = 1 ORDER BY id DESC");
+$query->execute();
+$rows = $query->fetchAll(PDO::FETCH_ASSOC);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +24,7 @@
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
     <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/x-icon">
-    <title>Team Booster | Register</title>
+    <title>Team Booster | Dashboard</title>
 </head>
 <body class="main-body">
     <div class="loader-wrap d-none">
@@ -15,7 +32,7 @@
     </div>
     <header>
         <div class="header">
-            <div class="logo"><a href="dashboard.html"><img src="./assets/img/logo.png" alt="logo" width="150"></a></div>
+            <div class="logo"><a href="dashboard"><img src="./assets/img/logo.png" alt="logo" width="150"></a></div>
             <div class="hamburger">
                 <button class="btn menu-btn">
                     <i class="fa-solid fa-bars"></i>
@@ -25,6 +42,9 @@
     </header>
     <section class="main-content">
         <div class="container">
+            <div class="user-profile pb-4">
+                <?php require_once("includes/components/widget.php"); ?>
+            </div>
             <div class="engage">
                 <div class="card">
                     <div class="card-header">
@@ -35,31 +55,16 @@
 
 
                         <h6 class="pt-3 text-primary">Available tasks</h6>
-                        <a href="tasks.html" class="">
+                        <?php foreach($rowx as $row){ ?>
+                        <a href="tasks?brandID=<?= $row['brand_id'] ?>" class="">
                             <div class="alert alert-primary" role="alert">                                
                                 <div class="product-list">
-                                    <img src="./assets/img/posting/mtn.jpg" class="product-img" alt="posting" width="40">
-                                    <span>MTN Nigeria - &#8358; 123.67</span>
+                                    <img src="<?= Helper::admin_url() ?>assets/img/brand/<?= $row['logo'] ?>" class="product-img" alt="brand" width="40">
+                                    <span><?= $row['name'] ?></span>
                                 </div>
                             </div>
                         </a>
-                        <a href="tasks.html" class="">
-                            <div class="alert alert-primary" role="alert">
-                                
-                                <div class="product-list">
-                                    <img src="./assets/img/posting/office.png" class="product-img" alt="posting" width="40">
-                                    <span>Tuface Idibia - &#8358; 200.00</span>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="tasks.html" class="">
-                            <div class="alert alert-primary" role="alert"> 
-                                <div class="product-list">
-                                    <img src="./assets/img/posting/office.png" class="product-img" alt="posting" width="40">
-                                    <span>Gucci - &#8358; 520.00</span>
-                                </div>
-                            </div>
-                        </a>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="card">
@@ -70,22 +75,18 @@
                         <p>Earn by posting contents of businesses, organisations and top brands on your timeline.</p>
 
                         <h6 class="pt-3 text-success">Available tasks</h6>
-                        <a href="posting.html" class="">
-                            <div class="alert alert-success" role="alert">
-                                <div class="product-list">
-                                    <img src="./assets/img/posting/airtel.jpeg" class="product-img" alt="posting" width="40">
-                                    <span>Airtel Nigeria - &#8358; 323.00<span>
-                                </div>                                
-                            </div>
-                        </a>
-                        <a href="posting.html" class="">
-                            <div class="alert alert-success" role="alert">
-                                <div class="product-list">
-                                    <img src="./assets/img/posting/office.png" class="product-img" alt="posting" width="40">
-                                    <span>Nigeria Brewery - &#8358; 350.00</span>
-                                </div> 
-                            </div>
-                        </a>
+
+                        <?php foreach ($rows as $row) { 
+                            $brand = new Brand($kon, $row['brand_id']); ?>
+                            <a href="posting?brandID=<?= $row['brand_id'] ?>" class="">
+                                <div class="alert alert-success" role="alert">
+                                    <div class="product-list">
+                                        <img src="<?= Helper::admin_url() ?>assets/img/brand/<?= $brand->logo() ?>" class="product-img" alt="posting" width="40">
+                                        <span><?= $brand->name() ?><span>
+                                    </div>                                
+                                </div>
+                            </a>                            
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -99,8 +100,7 @@
     <div class="menu d-none">
         <button class="btn close-menu"><i class="fa-solid fa-times"></i></button>
         <div class="menu-items">
-            <a href="./dashboard.html"><p>Dashboard</p></a>
-            <a href="?logout"><p>Logout</p></a>
+            <?php require_once("includes/components/menu.php"); ?>
         </div>
     </div>
     <div class="menu-bg d-none"></div>

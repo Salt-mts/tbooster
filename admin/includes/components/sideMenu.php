@@ -5,7 +5,7 @@
             </a>
             <a href="engage" class="dashboard__main__sidebar__item <?= PAGE=="engage"?"active":"" ?> ">
                 <div class="dashboard__main__sidebar__item__icon"><i class="fas fa-list"></i></div> 
-                <div class="dashboard__main__sidebar__item__text">Engagement Tasks</div>
+                <div class="dashboard__main__sidebar__item__text">Tasks</div>
             </a>
             <a href="add" class="dashboard__main__sidebar__item <?= PAGE=="addtask"?"active":"" ?> ">
                 <div class="dashboard__main__sidebar__item__icon"><i class="fas fa-plus"></i></div> 

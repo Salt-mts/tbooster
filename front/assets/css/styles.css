@@ -1,7 +1,6 @@
 @import url("global.css");
 @import url("components/animation.css");
 @import url("components/main.css");
-@import url("components/home.css");
 
 .hero{
   background-color: #F0EEF1;

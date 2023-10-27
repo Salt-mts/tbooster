@@ -1,3 +1,10 @@
+<?php
+require_once("account/includes/init.php");
+if(logged_in()){
+    Helper::redirect("./account/dashboard");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,41 +34,53 @@
         <div class="form">
             <h4>Create an account</h4>
             <small class=""><i>Complete the form below</i></small><br><br>
-            <form id="agent-form">
+            <form id="regform" autocomplete="on">
                 <div class="mb-2">
                   <label for="names" class="form-label">Full Names</label>
-                  <input type="text" class="form-control" id="names" name="fname" required>
+                  <input type="text" class="form-control form-control-sm" id="names" name="fname" required>
                 </div>
                 <div class="mb-2">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control form-control-sm" id="email" name="email" required>
                   </div>                
                 <div class="mb-2">
                   <label for="phone" class="form-label">Phone</label>
-                  <input type="number" class="form-control" id="phone" name="phone" min="1" required>
+                  <input type="number" class="form-control form-control-sm" id="phone" name="phone" min="1" required>
                 </div>
                 <div class="mb-2">
                   <label for="subpass" class="form-label">Job pass</label>
-                  <input type="number" class="form-control" id="subpass" name="subpass" min="1" required>
+                  <input type="number" class="form-control form-control-sm" id="subpass" name="subpass" min="1" required>
                   <small><i class="text-primary buy-jobpass" style="cursor: pointer;">Click here to buy a job pass code.</i></small>
                 </div>
                 <div class="mb-2">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control form-control-sm" id="password" name="password" required>
                 </div>
                 <div class="mb-2">
                     <label for="cpassword" class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="cpassword" name="cpassword" required>
+                    <input type="password" class="form-control form-control-sm" id="cpassword" name="cpassword" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="mb-2">
+                  <label class="form-label">Schedule</label>
+                    <div style="display:flex; gap: 20px;">
+                        <span>
+                            <label for="ftime" class="form-label">Full Time</label>
+                            <input type="radio" value="full_time" id="ftime" name="schedule" checked>
+                        </span>
+                        <span>
+                            <label for="ptime" class="form-label">Part Time</label>
+                            <input type="radio" value="part_time" id="ptime" name="schedule">
+                        </span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                <div class="py-3">
+                    <small>Click here to <a class="text-primary" href="./login">Login</a></small>
+                </div>
               </form>
         </div>
     </section>
-    <footer>
-        <div class="footer">
-          <p>  &copy; <span class="fyear"></span> Abia State Internal Revenue Central System</p>
-        </div>
-    </footer>
+    <footer><div class="footer"></div></footer>
     <div class="menu d-none">
         <button class="btn close-menu"><i class="fa-solid fa-times"></i></button>
         <div class="menu-items">
@@ -108,32 +127,59 @@
     <div class="notify"></div>
     <script src="./assets/js/bootstrap.min.js"></script>
     <script src="./assets/js/main.js"></script>
-    <script src="./assets/js/content.js"></script>
     <script>
-        /*
-        const agentForm = document.getElementById("agent-form")
-        agentForm.onsubmit = (e)=>{
+
+    // my modal
+    const jobPass = document.querySelector(".buy-jobpass")
+    const myModal = document.querySelector(".my-modal")
+    const myModalBg = document.querySelector(".my-modal-bg")
+    const closeMyModalBtn = document.querySelector(".close-my-modal")
+
+    jobPass.onclick = ()=>{
+        openMyModal()
+    }
+    closeMyModalBtn.onclick = ()=>{
+        closeMyModal()
+    }
+    myModalBg.onclick = ()=>{
+        closeMyModal()
+    }
+
+
+    function openMyModal(){
+        myModal.classList.remove("d-none")
+        myModal.classList.add("puff-in-center")
+        myModalBg.classList.remove("d-none")
+    }
+    function closeMyModal(){
+        myModal.classList.add("d-none")
+        myModal.classList.remove("puff-in-center")
+        myModalBg.classList.add("d-none")
+    }
+
+
+        const regForm = document.getElementById("regform")
+        regForm.onsubmit = (e)=>{
             e.preventDefault()
-            showLoader()
+            // showLoader()
             ajax = new XMLHttpRequest()
             ajax.onload = ()=>{
                 if(ajax.readyState == 4 && ajax.status == 200){
                     if(parseInt(ajax.responseText)==1){
-                        hideLoader()
+                        // hideLoader()
                         notifyUser("success", "Successful");
-                        agentForm.reset()
+                        regForm.reset()
                     }else{
-                        hideLoader()
+                        // hideLoader()
                         notifyUser("danger", ajax.responseText);
                     }
                 }
             }
             ajax.open("POST", "process.php", true)
-            const formData = new FormData(agentForm);
-            // console.log(formData)
+            const formData = new FormData(regForm);
+            console.log(formData)
             ajax.send(formData)
         }
-        */
     </script>   
 </body>
 </html>

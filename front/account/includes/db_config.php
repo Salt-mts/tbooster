@@ -4,7 +4,7 @@
     
     // **************** for local connection ******************
     define("HOST", "localhost");
-    define("DBNAME", "abiapay");
+    define("DBNAME", "tbooster");
     define("DBUSER", "root");
     define("DBPASS", "");
     

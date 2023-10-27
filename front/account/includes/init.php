@@ -2,6 +2,12 @@
 require_once "db_config.php";
 
 
+// *************load all classes (autoload)****************
+spl_autoload_register(function($class_name){
+	include "classes/$class_name.php";
+});
+
+
 // ************PDO connection************
 try {
 	$kon = new PDO("mysql:host=".HOST.";dbname=".DBNAME."","".DBUSER."","".DBPASS."");
@@ -16,3 +22,33 @@ try {
 // ****************initialization****************
 date_default_timezone_set('Africa/Lagos');
 // error_reporting(0);
+
+
+function logged_in(){
+	if (isset($_SESSION['tboostLogin'])) {	
+		return true;
+	}elseif(isset($_COOKIE['tboostLogin'])){
+        $_SESSION['tboostLogin'] = $_COOKIE['tboostLogin'];
+        return true;
+    }else{
+		return false;
+	}
+}
+
+if(logged_in()){
+	$email = $_SESSION['tboostLogin'];
+	$user = new User($kon, $email);
+	$uid = $user->id();
+	$fullname = $user->fullname();
+	$schedule = $user->schedule();
+}
+// ******************logout function******************
+function logout(){
+	session_destroy();
+	setcookie("tboostLogin", "", time() - (86400 * 1), "/");
+	Helper::redirect("../login");
+}
+
+if(isset($_GET["logout"])){
+	logout();
+}

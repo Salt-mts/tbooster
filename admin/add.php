@@ -7,10 +7,14 @@
     exit();
     }
 
-    function insertIntoAll($brandID){
+    function insertPosting($brandID){
         global $kon;
         $post = $kon->prepare("INSERT INTO posting (brand_id) VALUES ('$brandID')");
         $post->execute();
+    }
+
+    function insertOthers($brandID){
+        global $kon;
 
         $downloads = $kon->prepare("INSERT INTO downloads (brand_id) VALUES ('$brandID')");
         $downloads->execute();
@@ -23,12 +27,13 @@
 
         $likes = $kon->prepare("INSERT INTO likes (brand_id) VALUES ('$brandID')");
         $likes->execute();
-}
+    }
 
     if (isset($_POST['submit'])) {
         $brand = Sanitizer::sanitizeInput($_POST['pname']);
         $image = $_FILES['pimage'];
         $brandID = Helper::randomString(10);
+        $type = Sanitizer::sanitizeInput($_POST['type']);
         $date = date("F j, Y");
 
         $image = $_FILES['pimage'];
@@ -42,27 +47,29 @@
             $error = "Enter a valid brand name";
         }else{
             if(empty($image['name']) && empty($image['tmp_name'])){
-                $query = $kon->prepare("INSERT INTO brand (name, brand_id, date_added) VALUES (:name, :id, :dt)");
+                $query = $kon->prepare("INSERT INTO brand (name, brand_id, brand_type, date_added) VALUES (:name, :id, :type, :dt)");
                 $query->bindParam(":name", $brand);
                 $query->bindParam(":id", $brandID);
+                $query->bindParam(":type", $type);
                 $query->bindParam(":dt", $date);
                 $done = $query->execute();
                 if($done){
-                    insertIntoAll($brandID);
-                    Helper::redirect("editBrand?brandID=$brandID");
+                    if($type == "posting"){insertPosting($brandID);}else{insertOthers($brandID);}
+                    Helper::redirect("$type?brandID=$brandID");
                 }
             }else{
                 if(uploadImage($image, $imageFileType)){
                     if(move_uploaded_file($image["tmp_name"], $target_file)) {
-                        $query = $kon->prepare("INSERT INTO brand (name, brand_id, logo, date_added) VALUES (:name, :id, :logo, :dt)");
+                        $query = $kon->prepare("INSERT INTO brand (name, brand_id, logo, brand_type, date_added) VALUES (:name, :id, :logo, :type, :dt)");
                         $query->bindParam(":name", $brand);
                         $query->bindParam(":id", $brandID);
                         $query->bindParam(":logo", $imgName);
+                        $query->bindParam(":type", $type);
                         $query->bindParam(":dt", $date);
                         $done = $query->execute();
                         if($done){
-                            insertIntoAll($brandID);
-                            Helper::redirect("editBrand?brandID=$brandID");
+                            if($type == "posting"){insertPosting($brandID);}else{insertOthers($brandID);}
+                            Helper::redirect("$type?brandID=$brandID");
                         }
                     }
                 }
@@ -134,8 +141,20 @@
                                 <div class="mb-3">
                                     <label for="pimage" class="form-label">Brand Image</label>
                                     <input class="form-control" type="file" name="pimage">
-                                  </div>
-                                  <div class="mb-3">
+                                </div>
+                                <div class="mb-3">
+                                    <div style="display:flex; gap: 20px;">
+                                        <span>
+                                            <label for="others" class="form-label">Others</label>
+                                            <input type="radio" value="others" id="others" name="type" checked>
+                                        </span>
+                                        <span>
+                                            <label for="post" class="form-label">Posting</label>
+                                            <input type="radio" value="posting" id="post" name="type">
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
                                     <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>

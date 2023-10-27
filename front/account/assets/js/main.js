@@ -38,6 +38,7 @@ function notifyUser(type, msg){
     </div>
     `
     notify.classList.add("slide-top")
+
 }
 
 // loader

@@ -7,7 +7,8 @@ CREATE TABLE `follows` (
   `twitter` varchar(255) NULL,
   `tiktok` varchar(255) NULL,
   `linkedin` varchar(255) NULL,
-  `audiomack` varchar(255) NULL
+  `audiomack` varchar(255) NULL,
+  `price` double NULL
 )
 
 
@@ -20,14 +21,16 @@ CREATE TABLE `likes` (
   `twitter` varchar(255) NULL,
   `tiktok` varchar(255) NULL,
   `linkedin` varchar(255) NULL,
-  `audiomack` varchar(255) NULL
+  `audiomack` varchar(255) NULL,
+  `price` double NULL
 )
 
 CREATE TABLE `downloads` (
   `id` int(11) NOT NULL AUTO_INCREMENT KEY,
   `brand_id` varchar(255) UNIQUE NOT NULL,
   `playstore` varchar(255) NULL,
-`appstore` varchar(255) NULL
+`appstore` varchar(255) NULL,
+  `price` double NULL
 )
 
 CREATE TABLE `groups` (
@@ -35,13 +38,15 @@ CREATE TABLE `groups` (
   `brand_id` varchar(255) UNIQUE NOT NULL,
   `whatsapp` varchar(255) NULL,
   `facebook` varchar(255) NULL,
-`telegram` varchar(255) NULL
+`telegram` varchar(255) NULL,
+  `price` double NULL
 )
 
 CREATE TABLE `posting` (
   `id` int(11) NOT NULL AUTO_INCREMENT KEY,
   `brand_id` varchar(255) UNIQUE NOT NULL,
-  `link` text(1000) NULL
+  `link` text(1000),
+  `price` double NULL
 )
 
 CREATE TABLE `users` (
@@ -64,9 +69,11 @@ CREATE TABLE `admins` (
 
 CREATE TABLE `brand` (
   `id` int(11) NOT NULL AUTO_INCREMENT KEY,
-  `name` varchar(255) NOT NULL
+  `name` varchar(255) NOT NULL,
   `brand_id` varchar(255) UNIQUE NOT NULL,
   `logo` varchar(255) DEFAULT('default.png'),
+  `brand_type` varchar(255) NOT NULL,
+  `schedule` varchar(255) NOT NULL,
   `status` varchar(255) DEFAULT(0),
   `date_added` varchar(255) NOT NULL
 )

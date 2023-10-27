@@ -1,3 +1,16 @@
+<?php
+require_once("includes/init.php");
+if(!logged_in()){
+    Helper::redirect("../login");
+}
+
+if (isset($_GET['brandID'])) {
+    $brandID = Sanitizer::sanitizeInput($_GET['brandID']);
+}
+
+$posting = new Posting($kon, $brandID);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +20,7 @@
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
     <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/x-icon">
-    <title>Team Booster | Register</title>
+    <title>Team Booster | Posting task</title>
 </head>
 <body class="main-body">
     <div class="loader-wrap d-none">
@@ -15,7 +28,7 @@
     </div>
     <header>
         <div class="header">
-            <div class="logo"><a href="dashboard.html"><img src="./assets/img/logo.png" alt="logo" width="150"></a></div>
+            <div class="logo"><a href="dashboard.php"><img src="./assets/img/logo.png" alt="logo" width="150"></a></div>
             <div class="hamburger">
                 <button class="btn menu-btn">
                     <i class="fa-solid fa-bars"></i>
@@ -25,6 +38,9 @@
     </header>
     <section class="main-content">
         <div class="container">
+            <div class="user-profile pb-4">
+                <?php require_once("includes/components/widget.php"); ?>
+            </div>
             <div class="engage">
                 <div class="card">
                     <div class="card-header">
@@ -42,7 +58,7 @@
 
                         <div class="row my-3">
                             <div class="col-auto">
-                              <input type="text" id="copy-url" class="form-control form-control-sm" id="posturl" value="https://getbootstrap.com/docs/5.3/forms/form-control/">
+                              <input type="text" id="copy-url" class="form-control form-control-sm" id="posturl" value="<?= $posting->link() ?>">
                             </div>
                             <div class="col-auto">
                               <button type="submit" id="copy-btn" class="btn btn-sm btn-secondary" onclick="myFunction()">Copy</button>
@@ -64,9 +80,8 @@
     </footer>
     <div class="menu d-none">
         <button class="btn close-menu"><i class="fa-solid fa-times"></i></button>
-        <div class="menu-items">
-            <a href="./dashboard.html"><p>Dashboard</p></a>
-            <a href="?logout"><p>Logout</p></a>
+        <div class="menu-items">            
+            <?php require_once("includes/components/menu.php"); ?>
         </div>
     </div>
     <div class="menu-bg d-none"></div>

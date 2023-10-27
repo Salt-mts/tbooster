@@ -1,6 +1,8 @@
-const fyear = document.querySelector(".fyear")
+// footer date
 date = new Date()
-fyear.textContent = date.getFullYear()
+fyear= date.getFullYear()
+
+document.querySelector(".footer").innerHTML = `<p>  &copy; <span>${fyear}</span> Team Booster</p>`
 
 const hamburger = document.querySelector(".menu-btn")
 const menu = document.querySelector(".menu")

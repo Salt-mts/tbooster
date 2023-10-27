@@ -1,3 +1,11 @@
+<?php
+require_once("account/includes/init.php");
+if(logged_in()){
+    Helper::redirect("./account/dashboard");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,24 +35,26 @@
         <div class="form">
             <h4>Login</h4>
             <br>
-            <form id="agent-form">
+            <form id="login-form">
                 <div class="mb-2">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control form-control-sm" id="email" name="loginEmail" required>
                   </div>              
                 <div class="mb-2">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control form-control-sm" id="password" name="loginPass" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-sm btn-primary">Login</button>
+
+                <br>
+                <div class="d-flex justify-content-between py-3">
+                    <small class="text-primary"><a href="./register">Create account</a></small>
+                    <small class="forgot text-primary"><a href="#">Forgot password?</a></small>
+                </div>
               </form>
         </div>
     </section>
-    <footer>
-        <div class="footer">
-          <p>  &copy; <span class="fyear"></span> Team Booster</p>
-        </div>
-    </footer>
+    <footer><div class="footer"></div></footer>
     <div class="menu d-none">
         <button class="btn close-menu"><i class="fa-solid fa-times"></i></button>
         <div class="menu-items">
@@ -59,6 +69,30 @@
     <div class="notify"></div>
     <script src="./assets/js/bootstrap.min.js"></script>
     <script src="./assets/js/main.js"></script>
-    <script src="./assets/js/content.js"></script>
+    <script>
+        const loginForm = document.getElementById("login-form")
+        loginForm.onsubmit = (e)=>{
+            e.preventDefault()
+            showLoader()
+            ajax = new XMLHttpRequest()
+            ajax.onload = ()=>{
+                if(ajax.readyState == 4 && ajax.status == 200){
+                    if(parseInt(ajax.responseText)==1){
+                        hideLoader()
+                        notifyUser("success", "Successful");
+                        loginForm.reset()
+                        window.location = 'account/dashboard'
+                    }else{
+                        hideLoader()
+                        notifyUser("danger", ajax.responseText);
+                    }
+                }
+            }
+            ajax.open("POST", "process.php", true)
+            const formData = new FormData(loginForm);
+            console.log(formData)
+            ajax.send(formData)
+        }
+    </script>
 </body>
 </html>
