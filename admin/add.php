@@ -34,6 +34,7 @@
         $image = $_FILES['pimage'];
         $brandID = Helper::randomString(10);
         $type = Sanitizer::sanitizeInput($_POST['type']);
+        $schedule = Sanitizer::sanitizeInput($_POST['schedule']);
         $date = date("F j, Y");
 
         $image = $_FILES['pimage'];
@@ -47,10 +48,11 @@
             $error = "Enter a valid brand name";
         }else{
             if(empty($image['name']) && empty($image['tmp_name'])){
-                $query = $kon->prepare("INSERT INTO brand (name, brand_id, brand_type, date_added) VALUES (:name, :id, :type, :dt)");
+                $query = $kon->prepare("INSERT INTO brand (name, brand_id, brand_type, schedule, date_added) VALUES (:name, :id, :type, :sch, :dt)");
                 $query->bindParam(":name", $brand);
                 $query->bindParam(":id", $brandID);
                 $query->bindParam(":type", $type);
+                $query->bindParam(":sch", $schedule);
                 $query->bindParam(":dt", $date);
                 $done = $query->execute();
                 if($done){
@@ -60,11 +62,12 @@
             }else{
                 if(uploadImage($image, $imageFileType)){
                     if(move_uploaded_file($image["tmp_name"], $target_file)) {
-                        $query = $kon->prepare("INSERT INTO brand (name, brand_id, logo, brand_type, date_added) VALUES (:name, :id, :logo, :type, :dt)");
+                        $query = $kon->prepare("INSERT INTO brand (name, brand_id, logo, brand_type, schedule, date_added) VALUES (:name, :id, :logo, :type, :sch, :dt)");
                         $query->bindParam(":name", $brand);
                         $query->bindParam(":id", $brandID);
                         $query->bindParam(":logo", $imgName);
                         $query->bindParam(":type", $type);
+                        $query->bindParam(":sch", $schedule);
                         $query->bindParam(":dt", $date);
                         $done = $query->execute();
                         if($done){
@@ -141,6 +144,13 @@
                                 <div class="mb-3">
                                     <label for="pimage" class="form-label">Brand Image</label>
                                     <input class="form-control" type="file" name="pimage">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="schedule" class="form-label">Workers</label>
+                                    <select name="schedule" class="form-control" id="schedule">
+                                        <option value="full_time">Full Time</option>
+                                        <option value="part_time">Part Time</option>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <div style="display:flex; gap: 20px;">

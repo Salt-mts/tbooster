@@ -33,6 +33,7 @@
             <p>
                 You will be working fulltime and earning N 105,000 monthly.
             </p>
+            <a href="./login.php" class="btn btn-sm btn-primary">Login</a>
 
         </div>
     </section>

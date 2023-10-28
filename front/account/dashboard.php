@@ -55,7 +55,10 @@ $rows = $query->fetchAll(PDO::FETCH_ASSOC);
 
 
                         <h6 class="pt-3 text-primary">Available tasks</h6>
-                        <?php foreach($rowx as $row){ ?>
+                        <?php foreach($rowx as $row){  
+                            $completed = new Completed($kon, $row['brand_id'], $uid); 
+                            if(!$completed->isCompleted()){
+                        ?>
                         <a href="tasks?brandID=<?= $row['brand_id'] ?>" class="">
                             <div class="alert alert-primary" role="alert">                                
                                 <div class="product-list">
@@ -64,7 +67,7 @@ $rows = $query->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
                         </a>
-                        <?php } ?>
+                        <?php }} ?>
                     </div>
                 </div>
                 <div class="card">
@@ -77,7 +80,10 @@ $rows = $query->fetchAll(PDO::FETCH_ASSOC);
                         <h6 class="pt-3 text-success">Available tasks</h6>
 
                         <?php foreach ($rows as $row) { 
-                            $brand = new Brand($kon, $row['brand_id']); ?>
+                            $brand = new Brand($kon, $row['brand_id']); 
+                            $completed = new Completed($kon, $row['brand_id'], $uid); 
+                            if(!$completed->isCompleted()){
+                            ?>
                             <a href="posting?brandID=<?= $row['brand_id'] ?>" class="">
                                 <div class="alert alert-success" role="alert">
                                     <div class="product-list">
@@ -86,7 +92,7 @@ $rows = $query->fetchAll(PDO::FETCH_ASSOC);
                                     </div>                                
                                 </div>
                             </a>                            
-                        <?php } ?>
+                        <?php }} ?>
                     </div>
                 </div>
             </div>

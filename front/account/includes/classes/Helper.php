@@ -30,7 +30,7 @@ class Helper{
 		return "&#8358; ";
 	}
 	public static function date(){
-		return date("F d Y, g:i a");
+		return date("F d, Y - g:i a");
 	}
 	public static function logo(){
 		return Helper::site_url()."assets/img/logo.png";

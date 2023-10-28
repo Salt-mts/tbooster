@@ -48,8 +48,8 @@ if(logged_in()){
                   <input type="number" class="form-control form-control-sm" id="phone" name="phone" min="1" required>
                 </div>
                 <div class="mb-2">
-                  <label for="subpass" class="form-label">Job pass</label>
-                  <input type="number" class="form-control form-control-sm" id="subpass" name="subpass" min="1" required>
+                  <label for="jobpass" class="form-label">Job pass</label>
+                  <input type="text" class="form-control form-control-sm" id="jobpass" name="jobpass" required>
                   <small><i class="text-primary buy-jobpass" style="cursor: pointer;">Click here to buy a job pass code.</i></small>
                 </div>
                 <div class="mb-2">
@@ -159,18 +159,19 @@ if(logged_in()){
 
 
         const regForm = document.getElementById("regform")
+        const regForm = document.getElementById("regform")
         regForm.onsubmit = (e)=>{
             e.preventDefault()
-            // showLoader()
+            showLoader()
             ajax = new XMLHttpRequest()
             ajax.onload = ()=>{
                 if(ajax.readyState == 4 && ajax.status == 200){
                     if(parseInt(ajax.responseText)==1){
-                        // hideLoader()
+                        hideLoader()
                         notifyUser("success", "Successful");
-                        regForm.reset()
+                        window.location = 'success'
                     }else{
-                        // hideLoader()
+                        hideLoader()
                         notifyUser("danger", ajax.responseText);
                     }
                 }

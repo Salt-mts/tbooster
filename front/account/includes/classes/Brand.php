@@ -21,6 +21,8 @@
 		function logo(){ return $this->data['logo']; }
         function name(){ return $this->data['name']; }
         function status(){ return $this->data['status']; }
+        function schedule(){ return $this->data['schedule']; }
+        function type(){ return $this->data['brand_type']; }
         function date(){ return $this->data['date_added']; }
 	}
 ?> 

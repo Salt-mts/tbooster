@@ -11,7 +11,21 @@ $like = new Likes($kon, $brandID);
 $follow = new Follows($kon, $brandID);
 $group = new Group($kon, $brandID);
 $app = new App($kon, $brandID);
+$completed = new Completed($kon, $brandID, $uid);
+$brand = new Brand($kon, $brandID);
+$brandType = $brand->type();
+$price = $like->price() + $follow->price() + $group->price() + $app->price();
 
+if(isset($_GET['comp'])){
+    $added = $completed->add($brandType, $price);
+    if($added){
+        Helper::redirect("completed");
+    }
+}
+
+if($completed->isCompleted()){
+    Helper::redirect("completed");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -183,7 +197,7 @@ $app = new App($kon, $brandID);
                         </div>
                     </div>
                     <div class="p-3">
-                        <a href="#" class="btn btn-primary">I have completed this task</a>
+                        <a onclick="return confirm('Are you sure you completed this tasks?')" href="tasks?brandID=<?= $brandID ?>&comp" class="btn btn-primary">I have completed this task</a>
                     </div>
                   </div>
             </div>

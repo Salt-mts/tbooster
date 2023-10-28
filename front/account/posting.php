@@ -9,6 +9,21 @@ if (isset($_GET['brandID'])) {
 }
 
 $posting = new Posting($kon, $brandID);
+$completed = new Completed($kon, $brandID, $uid);
+$brand = new Brand($kon, $brandID);
+$brandType = $brand->type();
+$price = $posting->price();
+
+if(isset($_GET['comp'])){
+    $added = $completed->add($brandType, $price);
+    if($added){
+        Helper::redirect("completed");
+    }
+}
+
+if($completed->isCompleted()){
+    Helper::redirect("completed");
+}
 
 ?>
 <!DOCTYPE html>
@@ -44,7 +59,7 @@ $posting = new Posting($kon, $brandID);
             <div class="engage">
                 <div class="card">
                     <div class="card-header">
-                        Airtel Nigeria
+                        Airtel Nigeria - &#8358;<?= number_format($posting->price(),2) ?>
                     </div>
                     <div class="card-body">
                         <div class="">
@@ -67,7 +82,7 @@ $posting = new Posting($kon, $brandID);
                         </div>
                     </div>
                     <div class="p-3">
-                        <a href="#" class="btn btn-success">I have completed this task</a>
+                        <a onclick="return confirm('Are you sure you completed this tasks?')" href="posting?brandID=<?= $brandID ?>&comp" class="btn btn-success">I have completed this task</a>
                     </div>
                   </div>
             </div>
