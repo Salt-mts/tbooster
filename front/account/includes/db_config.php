@@ -12,7 +12,7 @@
     
     // **************** for Live connection ******************
     // define("HOST", "localhost");
-    // define("DBNAME", "saltadyj_abiapay");
-    // define("DBUSER", "saltadyj_abiauza");
-    // define("DBPASS", "pLXe_K33uI(K");
+    // define("DBNAME", "amicuhjc_booster");
+    // define("DBUSER", "amicuhjc_team");
+    // define("DBPASS", "Hm{wZ342,*1(");
     

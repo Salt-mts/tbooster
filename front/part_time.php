@@ -31,9 +31,9 @@
                 You have been offered a 12 months contract job on TEAM BOOSTER, you will be working as a <strong>Ad Manager</strong> for our company and you are to resume immediately and accept rate ads for top brands.
             </p>
             <p>
-                You will be working part-time and earning N 60,000 monthly.
+                You will be working part-time and earning &#8358;60,000 monthly.
             </p>
-
+            <a href="./login.php" class="btn btn-sm btn-primary">Login</a>
         </div>
     </section>
     <footer><div class="footer"></div></footer>

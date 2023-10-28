@@ -11,10 +11,14 @@ if(isset($_POST['loginEmail'])  && isset($_POST['loginPass'])){
     $query->bindParam(":em", $email);
     $query->execute();
     $row = $query->fetch(PDO::FETCH_ASSOC);
-    if($row['password'] === $password){
-        echo 1;
-        $_SESSION['tboostLogin'] = $email;
-        setcookie("tboostLogin", $email, time() + (86400), "/");
+    if($query->rowCount() == 1){
+        if($row['password'] === md5($password)){
+            echo 1;
+            $_SESSION['tboostLogin'] = $email;
+            setcookie("tboostLogin", $email, time() + (86400), "/");
+        }else{
+            echo "Invalid Login Details!";
+        }
     }else{
         echo "Invalid Login Details!";
     }
@@ -51,6 +55,7 @@ if(isset($_POST['fname'])  && isset($_POST['phone'])){
         echo "Job Pass already used";
         exit();
     }else{
+        $password = md5($password);
         $query = $kon->prepare("INSERT INTO users(email, password, schedule, fullname, jobpass, date_added) VALUES(:em, :pw, :sch, :fn, :jp, :dt)");
         $query->bindParam(":em", $email);
         $query->bindParam(":pw", $password);

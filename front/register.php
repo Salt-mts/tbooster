@@ -34,7 +34,7 @@ if(logged_in()){
         <div class="form">
             <h4>Create an account</h4>
             <small class=""><i>Complete the form below</i></small><br><br>
-            <form id="regform" autocomplete="on">
+            <form id="regform">
                 <div class="mb-2">
                   <label for="names" class="form-label">Full Names</label>
                   <input type="text" class="form-control form-control-sm" id="names" name="fname" required>
@@ -159,7 +159,6 @@ if(logged_in()){
 
 
         const regForm = document.getElementById("regform")
-        const regForm = document.getElementById("regform")
         regForm.onsubmit = (e)=>{
             e.preventDefault()
             showLoader()
@@ -169,7 +168,8 @@ if(logged_in()){
                     if(parseInt(ajax.responseText)==1){
                         hideLoader()
                         notifyUser("success", "Successful");
-                        window.location = 'success'
+                        // window.location = 'success'
+                        window.location = regform.schedule.value
                     }else{
                         hideLoader()
                         notifyUser("danger", ajax.responseText);
@@ -178,7 +178,6 @@ if(logged_in()){
             }
             ajax.open("POST", "process.php", true)
             const formData = new FormData(regForm);
-            console.log(formData)
             ajax.send(formData)
         }
     </script>   

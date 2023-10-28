@@ -62,15 +62,14 @@ if($completed->isCompleted()){
                         Airtel Nigeria - &#8358;<?= number_format($posting->price(),2) ?>
                     </div>
                     <div class="card-body">
-                        <div class="">
+                        <!-- <div class="">
                             <div class="card" style="width: 18rem;">
                                 <img src="./assets/img/posting/airtel.jpeg" class="card-img-top" alt="posting">
                                 <div class="card-body">
                                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 </div>
                               </div>
-                        </div>
-
+                        </div> -->
                         <div class="row my-3">
                             <div class="col-auto">
                               <input type="text" id="copy-url" class="form-control form-control-sm" id="posturl" value="<?= $posting->link() ?>">
