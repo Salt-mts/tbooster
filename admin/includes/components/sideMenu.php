@@ -9,14 +9,18 @@
             </a>
             <a href="add" class="dashboard__main__sidebar__item <?= PAGE=="addtask"?"active":"" ?> ">
                 <div class="dashboard__main__sidebar__item__icon"><i class="fas fa-plus"></i></div> 
-                <div class="dashboard__main__sidebar__item__text">Add Tasks</div>
+                <div class="dashboard__main__sidebar__item__text">Add Brand</div>
             </a>
             <a href="jobpass" class="dashboard__main__sidebar__item <?= PAGE=="pass"?"active":"" ?> ">
                 <div class="dashboard__main__sidebar__item__icon"><i class="fas fa-plus"></i></div> 
                 <div class="dashboard__main__sidebar__item__text">Job Pass</div>
             </a>
-            <a href="users" class="dashboard__main__sidebar__item <?= PAGE=="users"?"active":"" ?> ">
+            <a href="approval" class="dashboard__main__sidebar__item <?= PAGE=="approval"?"active":"" ?> ">
                 <div class="dashboard__main__sidebar__item__icon"><i class="fas fa-credit-card"></i></div> 
+                <div class="dashboard__main__sidebar__item__text">Pending Approval</div>
+            </a>
+            <a href="users" class="dashboard__main__sidebar__item <?= PAGE=="users"?"active":"" ?> ">
+                <div class="dashboard__main__sidebar__item__icon"><i class="fas fa-users"></i></div> 
                 <div class="dashboard__main__sidebar__item__text">Users</div>
             </a>
             <a href="?logout" class="dashboard__main__sidebar__item">

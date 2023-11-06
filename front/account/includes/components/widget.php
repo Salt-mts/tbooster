@@ -1,2 +1,6 @@
+<?php 
+require_once("includes/init.php");
+
+?>
 <h5><?= $fullname ?></h5>
-<p>Total earnings: &#8358; 23.00</p>
+<p>Current earnings: &#8358; <?= $user->totalUnpaid($uid) ?></p>

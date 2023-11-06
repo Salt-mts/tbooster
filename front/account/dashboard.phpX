@@ -4,6 +4,17 @@ if(!logged_in()){
     Helper::redirect("../login");
 }
 
+if($schedule == "full_time"){
+    $kweri = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'others' AND status = 1 ORDER BY id DESC");
+    $kweri->execute();
+    $rowx = $kweri->fetchAll(PDO::FETCH_ASSOC);
+
+    $query = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'posting' AND status = 1 ORDER BY id DESC");
+    $query->execute();
+    $rows = $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+if($schedule == "part_time"){
     $kweri = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'others' AND schedule = '$schedule' AND status = 1 ORDER BY id DESC");
     $kweri->execute();
     $rowx = $kweri->fetchAll(PDO::FETCH_ASSOC);
@@ -11,6 +22,7 @@ if(!logged_in()){
     $query = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'posting' AND schedule = '$schedule' AND status = 1 ORDER BY id DESC");
     $query->execute();
     $rows = $query->fetchAll(PDO::FETCH_ASSOC);
+}
 
 
 
@@ -46,16 +58,10 @@ if(!logged_in()){
             <div class="user-profile pb-4">
                 <?php require_once("includes/components/widget.php"); ?>
             </div>
-            <?php if($schedule == "full_time"): ?>
-            <div class="d-flex gap-1 py-3" >
-                <a href="dashboard" class="btn-sm btn btn-outline-secondary">Full Time</a>
-                <a href="dashboard_part" class="btn-sm btn btn-outline-danger">Part Time</a>
-            </div>
-            <?php endif ?>
             <div class="engage">
                 <div class="card">
                     <div class="card-header">
-                      <h5>Engagement Task</h5>
+                      Engagement Task
                     </div>
                     <div class="card-body">
                         <p>Like and follow business and organisations/top brands pages and earn. Download and preview apps, post comment, subscribe, join groups to earn. The more pages you like and follow/subscribe, the more you earn.</p>
@@ -79,7 +85,7 @@ if(!logged_in()){
                 </div>
                 <div class="card">
                     <div class="card-header">
-                      <h5>Posting Task</h5>
+                      Posting Task
                     </div>
                     <div class="card-body">
                         <p>Earn by posting contents of businesses, organisations and top brands on your timeline.</p>
@@ -120,6 +126,31 @@ if(!logged_in()){
 
     <script src="./assets/js/bootstrap.min.js"></script>
     <script src="./assets/js/main.js"></script>
-   
+    <script>
+        /*
+        const agentForm = document.getElementById("agent-form")
+        agentForm.onsubmit = (e)=>{
+            e.preventDefault()
+            showLoader()
+            ajax = new XMLHttpRequest()
+            ajax.onload = ()=>{
+                if(ajax.readyState == 4 && ajax.status == 200){
+                    if(parseInt(ajax.responseText)==1){
+                        hideLoader()
+                        notifyUser("success", "Successful");
+                        agentForm.reset()
+                    }else{
+                        hideLoader()
+                        notifyUser("danger", ajax.responseText);
+                    }
+                }
+            }
+            ajax.open("POST", "process.php", true)
+            const formData = new FormData(agentForm);
+            // console.log(formData)
+            ajax.send(formData)
+        }
+        */
+    </script>   
 </body>
 </html>

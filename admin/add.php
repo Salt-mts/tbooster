@@ -37,7 +37,6 @@
         $schedule = Sanitizer::sanitizeInput($_POST['schedule']);
         $date = date("F j, Y");
 
-        $image = $_FILES['pimage'];
         $target_dir = "./assets/img/brand/";
         $imageFileType = strtolower(pathinfo($image['name'],PATHINFO_EXTENSION));
         $imgName = $brandID.'.'.$imageFileType;

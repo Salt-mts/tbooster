@@ -49,8 +49,10 @@ CREATE TABLE `groups` (
 CREATE TABLE `posting` (
   `id` int(11) NOT NULL AUTO_INCREMENT KEY,
   `brand_id` varchar(255) UNIQUE NOT NULL,
-  `link` text(1000),
+  `link` varchar(255) NULL,
+  `descr` text(1000),
   `price` double NULL,
+  `image` varchar(255) NULL,
   FOREIGN KEY (brand_id) REFERENCES brand(brand_id) on delete cascade
 )
 
@@ -87,7 +89,7 @@ CREATE TABLE `brand` (
 CREATE TABLE `completed` (
   `id` int(11) NOT NULL AUTO_INCREMENT KEY,
   `user_id` varchar(255) NOT NULL,
-  `brand_id` varchar(255) NOT NULL,
+  `brand_id` varchar(255) UNIQUE NOT NULL,
   `brand_type` varchar(255) NOT NULL,
   `price` double NULL,
   `status` int(11) DEFAULT(0),

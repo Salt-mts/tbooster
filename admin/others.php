@@ -210,7 +210,7 @@
                                     <input type="text" class="form-control" name="faudiomack" placeholder="Audiomack Link" value="<?= @$follow->audiomack() ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="number" class="form-control" name="fprice" min="1" step="0.01" placeholder="Amount to pay" value="<?= @$follow->price() ?>">
+                                    <input type="number" class="form-control" name="fprice" min="1" step="0.01" placeholder="Amount to pay" value="<?= @$follow->price() ?>" required>
                                 </div>
                                   <div class="mb-3">
                                     <button type="submit" name="follow" class="btn btn-primary">Submit</button>
@@ -248,7 +248,7 @@
                                     <input type="text" class="form-control" name="audiomack" placeholder="Audiomack Link" value="<?= @$like->audiomack() ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="number" class="form-control" name="price" min="1" step="0.01" placeholder="Amount to pay" value="<?= @$like->price() ?>">
+                                    <input type="number" class="form-control" name="price" min="1" step="0.01" placeholder="Amount to pay" value="<?= @$like->price() ?>" required>
                                 </div>
                                   <div class="mb-3">
                                     <button type="submit" name="like" class="btn btn-warning">Submit</button>
@@ -270,7 +270,7 @@
                                     <input type="text" class="form-control" name="appstore" placeholder="Apple Store Link" value="<?= @$app->appstore() ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="number" class="form-control" name="aprice" min="1" step="0.01" placeholder="Amount to pay" value="<?= @$app->price() ?>">
+                                    <input type="number" class="form-control" name="aprice" min="1" step="0.01" placeholder="Amount to pay" value="<?= @$app->price() ?>" required>
                                 </div>
                                 <div class="mb-3">
                                     <button type="submit" name="download" class="btn btn-success">Submit</button>
@@ -294,7 +294,7 @@
                                     <input type="text" class="form-control" name="gfacebook" placeholder="Facebook Group Link" value="<?= @$group->facebook() ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="number" class="form-control" name="gprice" min="1" step="0.01" placeholder="Amount to pay" value="<?= @$group->price() ?>">
+                                    <input type="number" class="form-control" name="gprice" min="1" step="0.01" placeholder="Amount to pay" value="<?= @$group->price() ?>" required>
                                 </div>
                                   <div class="mb-3">
                                     <button type="submit" name="group" class="btn btn-secondary">Submit</button>

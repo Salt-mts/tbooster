@@ -21,6 +21,7 @@
 		function logo(){ return $this->data['logo']; }
         function name(){ return $this->data['name']; }
         function status(){ return $this->data['status']; }
+        function schedule(){ return $this->data['schedule']; }
         function date(){ return $this->data['date_added']; }
         function isActive(){ return $this->data['status']; }
 
@@ -125,7 +126,7 @@
             return $stmt->execute();
         }
 
-        function updatePosting($link, $price){
+        function updatePosting($link, $price, $image, $descr){
 
             $query = $this->kon->prepare("SELECT * FROM posting WHERE brand_id = :bid");
             $query->bindParam(":bid", $this->bid);
@@ -135,10 +136,12 @@
                 $kweri->bindParam(":bid", $this->bid);
                 $kweri->execute();
             }
-            $stmt = $this->kon->prepare("UPDATE posting SET link = :lk, price = :pr WHERE brand_id = :bid");
+            $stmt = $this->kon->prepare("UPDATE posting SET link = :lk, price = :pr, image = :img, descr = :descr WHERE brand_id = :bid");
             $stmt->bindParam(":bid", $this->bid);
             $stmt->bindParam(":lk", $link);
             $stmt->bindParam(":pr", $price);
+            $stmt->bindParam(":descr", $descr);
+            $stmt->bindParam(":img", $image);
             return $stmt->execute();
         }
 		

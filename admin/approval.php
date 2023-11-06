@@ -1,41 +1,32 @@
-<?php
-    require_once "includes/init.php";
-    require_once "includes/functions.php";
-    define("PAGE", "pass");
-    if(!logged_in()){
+<?php 
+require_once "includes/init.php";
+define("PAGE", "approval");
+if(!logged_in()){
     header("Location: login");
     exit();
-    }
+}
+$query = $kon->prepare("SELECT * FROM completed WHERE is_paid = 0 ORDER BY id DESC");
+$query->execute();
+$rows = $query->fetchAll(PDO::FETCH_ASSOC);
+$n = 1;
 
-    $query = $kon->prepare("SELECT * FROM jobpass ORDER BY id DESC");
-    $query->execute();
-    $rows = $query->fetchAll(PDO::FETCH_ASSOC);
-    $n = 1;
-
-    if (isset($_POST['submit'])) {
-        $owner = Sanitizer::sanitizeInput($_POST['owner']);
-        $code = Sanitizer::sanitizeInput($_POST['code']);
-        $date = date("F j, Y");
-        $stmt = $kon->prepare("SELECT * FROM jobpass WHERE pass = '$code' ");
-        $stmt->execute();
-                
-        if(empty($owner) || empty($code)){
-            $error = "All fields are required";
-        }
-        elseif($stmt->rowCount()==1){
-            $error = "Code already added";
-        }
-        else{
-            $query = $kon->prepare("INSERT INTO jobpass (owner, pass, date_added) VALUES (:own, :code, :dt)");
-            $query->bindParam(":own", $owner);
-            $query->bindParam(":code", $code);
-            $query->bindParam(":dt", $date);
-            $done = $query->execute();
-            if($done){
-                Helper::redirect("jobpass");
-            }
-        }
+if(isset($_GET['approveit'])){
+    $id = $_GET['approveit'];
+    $query = $kon->prepare("UPDATE completed SET status = 1 WHERE id = '$id' ");
+    $done = $query->execute();
+    if($done){
+        Helper::redirect("approval");
     }
+}
+
+if(isset($_GET['markpaid'])){
+    $id = $_GET['markpaid'];
+    $query = $kon->prepare("UPDATE completed SET is_paid = 1 WHERE id = '$id' ");
+    $done = $query->execute();
+    if($done){
+        Helper::redirect("approval");
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,8 +38,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     <link href="./assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="./assets/css/dataTables.bootstrap5.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./assets/css/styles.css">
-    <title>Team Booster | Admin</title>
+    <title>Pending Approval | Admin</title>
 </head>
 <body>
     <nav>
@@ -85,61 +77,58 @@
             <div class="dashboard__main__content__container">
                 <div class="dashboard__main__content__row">
                     <div class="dashboard__main__content__row__item">
-                        <h1 class="dashboard__main__content__pagetitle">Add Job Pass</h1> 
+                        <h1 class="dashboard__main__content__pagetitle">Pending Approval</h1> 
                         <p class="dashboard__main__content__pagecaption light-text">
                             
                         </p>
                     </div>
                     <div class="settings__main__content__body">
-                        <div class="Add-product bg-white p-4">
-                            <div style="padding: 10px 0; color: red; text-align: center;"><?= @$error ?></div>
-                            <form action="" method="POST">
-                                <div class="mb-3">
-                                    <label for="owner" class="form-label">Pass Owner</label>
-                                    <select name="owner" id="owner" class="form-control">
-                                        <option value="MEGAMIKE">MEGAMIKE</option>
-                                        <option value="CCE J">CCE J</option>
-                                        <option value="WILLIAMS">WILLIAMS</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="code" class="form-label">Code</label>
-                                    <input class="form-control" type="text" id="code" name="code" placeholder="Job pass code" required>
-                                </div>                                
-                                <div class="mb-3">
-                                    <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-
-
-                        <br>
                         <div class="dataset-data table-responsive">
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>S/N</th>
-                                        <th>Owner</th>
-                                        <th>Code</th>
+                                        <th>User</th>
+                                        <th>Brand</th>
+                                        <th>Price</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Payment</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php  foreach ($rows as $row) { ?> 
+                                    <?php  foreach ($rows as $row) { 
+                                        $brand = new Brand($kon, $row['brand_id'])
+                                    ?>   
                                     <tr>
                                         <td><?= $n++ ?></td>
-                                        <td><?= $row['owner'] ?></td>
-                                        <td><?= $row['pass'] ?></td>
-                                        <td><a class="primary-btn-sm" onclick="return confirm('Sure to delete?')" href="jobpass?delpass=<?= $row['id'] ?>">Delete</a></td>
+                                        <td><?= $row['user_id'] ?></td>
+                                        <td><?= $brand->name() ?></td>
+                                        <td><?= number_format($row['price'],2) ?></td>  
+                                        <td><?= $row['brand_type'] ?></td>
+                                        <td><?= $row['status'] == 1?'Approved':'Pending Approval' ?></td>  
+                                        <td><?= $row['is_paid'] == 1?'Paid':'Not Paid' ?></td>      
+                                        <td>
+                                        <?php if($row['status']){ ?>
+                                            <a onclick="return confirm('Are you sure you have paid this user?')" class="primary-btn-sm" href="approval?markpaid=<?= $row['id'] ?>">Paid</a>
+                                        <?php }else{ ?>
+                                            <a onclick="return confirm('Are you sure this user have completed the task?')" class="primary-btn-sm" href="approval?approveit=<?= $row['id'] ?>">Approve</a>
+                                        <?php } ?>
+
+                                        </td>
                                     </tr> 
-                                    
                                     <?php } ?>                                   
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>S/N</th>
-                                        <th>Owner</th>
-                                        <th>Code</th>
+                                        <th>User</th>
+                                        <th>Brand</th>
+                                        <th>Price</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Payment</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -150,6 +139,12 @@
             </div>
         </div>
     </div>
+    <script src="./assets/js/jquery.js"></script>
+    <script src="./assets/js/jquery.dataTables.min.js"></script>
+    <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $('#example').DataTable();
+    </script>
     <script src="./assets/js/main.js"></script>
 </body>
 </html>

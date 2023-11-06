@@ -24,7 +24,7 @@ $rows = $query->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
     <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/x-icon">
-    <title>Team Booster | Dashboard</title>
+    <title>Team Booster | Completed task</title>
 </head>
 <body class="main-body">
     <div class="loader-wrap d-none">

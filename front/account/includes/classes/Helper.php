@@ -6,11 +6,11 @@ class Helper{
 		return "Team Booster";
 	}
 	public static function site_url(){
-		// return "https://tbooster.com/";
+		// return "https://tboosters.com/";
 		return "http://localhost/projects/cat-clients/tbooster/";
 	}
 	public static function admin_url(){
-		// return "https://tbooster.com/0app/";
+		// return "https://tboosters.com/fr/";
 		return "http://localhost/projects/cat-clients/tbooster/admin/";
 	}	
 	public static function siteEmail(){

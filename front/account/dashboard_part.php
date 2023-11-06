@@ -4,16 +4,13 @@ if(!logged_in()){
     Helper::redirect("../login");
 }
 
-    $kweri = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'others' AND schedule = '$schedule' AND status = 1 ORDER BY id DESC");
+    $kweri = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'others' AND schedule = 'part_time' AND status = 1 ORDER BY id DESC");
     $kweri->execute();
     $rowx = $kweri->fetchAll(PDO::FETCH_ASSOC);
 
-    $query = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'posting' AND schedule = '$schedule' AND status = 1 ORDER BY id DESC");
+    $query = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'posting' AND schedule = 'part_time' AND status = 1 ORDER BY id DESC");
     $query->execute();
     $rows = $query->fetchAll(PDO::FETCH_ASSOC);
-
-
-
 ?>
 
 <!DOCTYPE html>

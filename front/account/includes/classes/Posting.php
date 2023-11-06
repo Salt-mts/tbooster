@@ -20,5 +20,7 @@
 
 		function link(){ return $this->data['link']; }
         function price(){ return $this->data['price']; }
+        function image(){ return $this->data['image']; }
+        function desc(){ return $this->data['descr']; }
 	}
 ?> 

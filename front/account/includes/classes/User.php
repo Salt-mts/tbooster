@@ -50,6 +50,24 @@
 		}
 
 
+		function totalUnpaid($uid){
+			$stmt = $this->kon->prepare("SELECT SUM(price) AS sum FROM completed WHERE user_id = :uid AND status = 1 AND is_paid = 0 ");
+			$stmt->bindParam(":uid", $uid);
+			$stmt->execute();
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+			echo number_format($row['sum'], 2);
+		}
+		function totalPaid($uid){
+			$stmt = $this->kon->prepare("SELECT SUM(price) AS sum FROM completed WHERE user_id = :uid AND is_paid = 1 ");
+			$stmt->bindParam(":uid", $uid);
+			$stmt->execute();
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+			echo number_format($row['sum'], 2);
+		}
+
+
+
+
 		public function updateProfile($fname, $lname,$mname, $phone, $country, $city, $state, $addr, $occ, $dob){
 			$stmt = $this->kon->prepare("UPDATE uza SET firstname = :fn, lastname = :ln, middlename = :mn, dob = :dob, phone = :ph, addr = :addr, state = :st, country = :ctry, city = :cty, occupation = :occ WHERE email = :em ");
 			$stmt->bindParam(":fn", $fname);
@@ -68,14 +86,14 @@
 
 
 		function verifyPassword($oldPassword){
-			if(password_verify($oldPassword, $this->password())){
+			if(md5($oldPassword) === $this->password()){
 				return true;				
 			}
 		}
 
 		public function updatePassword($newPassword){
-			$pass = password_hash($newPassword, PASSWORD_DEFAULT);
-			$stmt = $this->kon->prepare("UPDATE uza SET password = :pw WHERE email = :em ");
+			$pass = md5($newPassword);
+			$stmt = $this->kon->prepare("UPDATE users SET password = :pw WHERE email = :em ");
 			$stmt->bindParam(":pw", $pass);
 			$stmt->bindParam(":em", $this->email);
 			return $stmt->execute();

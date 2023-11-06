@@ -44,14 +44,26 @@
     if (isset($_POST['posting'])) {
         $link = Sanitizer::sanitizeInput($_POST['posting-link']);
         $price = Sanitizer::sanitizeInput($_POST['pprice']);
+        $descr = Sanitizer::sanitizeInput($_POST['link-desc']);
+
+        $image = $_FILES['pimg'];
+        $target_dir = "./assets/img/posting/";
+        $imageFileType = strtolower(pathinfo($image['name'],PATHINFO_EXTENSION));
+        $imgName = time().'.'.$imageFileType;
+        $target_file = $target_dir . $imgName;
 
 
-        $done = $brand->updatePosting($link, $price);
-        if($done){
-            Helper::redirect("posting?brandID=$brandID&upd=Successful");
-        }else{
-            $dwnError = "Something went wrong! Try again.";
+        if(uploadImage($image, $imageFileType)){
+            if(move_uploaded_file($image["tmp_name"], $target_file)) {
+                $done = $brand->updatePosting($link, $price, $imgName, $descr);
+                if($done){
+                    Helper::redirect("posting?brandID=$brandID&upd=Successful");
+                }else{
+                    $dwnError = "Something went wrong! Try again.";
+                }                
+            }
         }
+
     }
 ?>
 <!DOCTYPE html>
@@ -117,12 +129,21 @@
                     <div class="settings__main__content__body">
                         <div class="Add-product bg-white p-4">
                             <h5>Posting Task</h5>
-                            <form action="" method="POST">
+                            <form action="" method="POST" enctype="multipart/form-data">
                                 <div class="mb-3">
-                                    <textarea class="form-control" name="posting-link" rows="3" placeholder="Enter link to post"><?= @$posting->link() ?></textarea>
+                                    <input type="text" class="form-control" name="posting-link" placeholder="Enter link to post" value="<?= @$posting->link() ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="number" class="form-control" name="pprice" min="1" step="0.01" placeholder="Amount to pay" value="<?= @$posting->price() ?>">
+                                    <textarea class="form-control" name="link-desc" rows="3" placeholder="Link description"><?= @$posting->desc() ?></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="number" class="form-control" name="pprice" min="1" step="0.01" placeholder="Amount to pay" value="<?= @$posting->price() ?>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="file" class="form-control" name="pimg" required>
+                                </div>
+                                <div class="mb-3">
+                                    <img src="./assets/img/posting/<?= @$posting->image() ?>" alt="image" width="70">
                                 </div>
                                 <div class="mb-3">
                                     <button type="submit" name="posting" class="btn btn-primary">Submit</button>

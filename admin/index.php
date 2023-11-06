@@ -6,19 +6,19 @@ if(!logged_in()){
     exit();
 }
 
-// $query = $kon->prepare("SELECT * FROM brand ORDER BY id DESC LIMIT 5");
-// $query->execute();
-// $rows = $query->fetchAll(PDO::FETCH_ASSOC);
+$query = $kon->prepare("SELECT * FROM brand ORDER BY id DESC LIMIT 5");
+$query->execute();
+$rows = $query->fetchAll(PDO::FETCH_ASSOC);
 
 
 // // counters
-// $kweri = $kon->prepare("SELECT * FROM agents");
-// $kweri->execute();
-// $countAgent = $kweri->rowCount();
+$kweri = $kon->prepare("SELECT * FROM users");
+$kweri->execute();
+$countAgent = $kweri->rowCount();
 
-// $stmt = $kon->prepare("SELECT * FROM issues");
-// $stmt->execute();
-// $countIssues= $stmt->rowCount();
+$stmt = $kon->prepare("SELECT * FROM completed WHERE status = 0");
+$stmt->execute();
+$countIssues= $stmt->rowCount();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,34 +77,36 @@ if(!logged_in()){
                     <div class="dashboard__main__content__body">
                         <div class="content__body__left">
                             <div class="balance">
-                                <div class="balance-text">Engagement Tasks</div>
+                                <div class="balance-text">Users</div>
                                 <div class="balance-amount font-bold">
-                                    <div class="the_price"><?= //$countAgent ?></div>
+                                    <div class="the_price"><?= $countAgent ?></div>
                                 </div>
                             </div>
                             <div class="balance">
-                                <div class="balance-text">Posting Tasks</div>
+                                <div class="balance-text">Pending Approval</div>
                                 <div class="balance-amount font-bold">
-                                    <div class="the_price"><?= //$countIssues ?></div>
+                                    <div class="the_price"><?= $countIssues ?></div>
                                 </div>
                             </div>
                         </div>
                         <div class="content__body_right">
                             <div class="transaction">
-                                <h4>Recent Enrollments</h4>
+                                <h4>Recent Tasks</h4>
                                 <div id="transactions">
                                     <?php  foreach ($rows as $row) { ?>                                    
                                     <div class="trans_row">
-                                        <div class="trans_logo">E</div>
+                                        <div class="trans_logo">
+                                            <img src="./assets/img/brand/<?= $row['logo']  ?>" alt="logo" width="45" style="border-radius: 50%;">
+                                        </div>
                                         <div class="trans_details">
-                                            <div class="trans_name"><?= $row['fname']  ?></div>
+                                            <div class="trans_name"><?= $row['name']  ?></div>
                                             <p class="trans_date light-text"><?= $row['date_added'] ?></p>
                                         </div>
-                                        <div class="trans_amt success"><?= $row['phone']  ?></div>
+                                        <div class="trans_amt success"><?= $row['brand_type']  ?></div>
                                     </div>
                                     <?php } ?>
                                 </div>
-                                <a class="primary-text trans_link"  href="enrollments"> All Enrollments</a>
+                                <a class="primary-text trans_link"  href="engage"> All Tasks</a>
                             </div>
                         </div>
                     </div>

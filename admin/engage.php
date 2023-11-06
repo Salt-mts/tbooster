@@ -74,6 +74,7 @@ $n = 1;
                                         <th>Logo</th>
                                         <th>Names</th>
                                         <th>Type</th>
+                                        <th>Schedule</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -85,6 +86,7 @@ $n = 1;
                                         <td><img src="./assets/img/brand/<?= $row['logo'] ?>" alt="logo" width="30"></td>
                                         <td><?= $row['name'] ?></td>
                                         <td><?= $row['brand_type'] ?></td>
+                                        <td><?= $row['schedule'] ?></td>
                                         <td><?= $row['status']==1?'Active':'not active' ?></td>
                                         <td><a class="primary-btn-sm" href="<?= $row['brand_type'] ?>?brandID=<?= $row['brand_id'] ?>">View</a></td>
                                     </tr> 
@@ -97,6 +99,7 @@ $n = 1;
                                         <th>Logo</th>
                                         <th>Names</th>
                                         <th>Type</th>
+                                        <th>Schedule</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>

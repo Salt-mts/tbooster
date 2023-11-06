@@ -19,6 +19,7 @@ header{
 .main-content{
     min-height: 80vh;
     padding: 70px 0;
+    background-color: #c8d4fa;
 }
 .form{
     margin: auto;
@@ -115,6 +116,7 @@ header{
     right: 20px;
     width: 300px;
     font-size: 12px;
+    z-index: 100;
 }
 
 .slide-top {
