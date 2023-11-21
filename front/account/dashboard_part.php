@@ -4,7 +4,7 @@ if(!logged_in()){
     Helper::redirect("../login");
 }
 
-    $kweri = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'others' AND schedule = 'part_time' AND status = 1 ORDER BY id DESC");
+    $kweri = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'engagement' AND schedule = 'part_time' AND status = 1 ORDER BY id DESC");
     $kweri->execute();
     $rowx = $kweri->fetchAll(PDO::FETCH_ASSOC);
 
@@ -40,13 +40,13 @@ if(!logged_in()){
     </header>
     <section class="main-content">
         <div class="container">
-            <div class="user-profile pb-4">
+            <div class="user-profile pb-4 text-light">
                 <?php require_once("includes/components/widget.php"); ?>
             </div>
             <?php if($schedule == "full_time"): ?>
             <div class="d-flex gap-1 py-3" >
                 <a href="dashboard" class="btn-sm btn btn-outline-secondary">Full Time</a>
-                <a href="dashboard_part" class="btn-sm btn btn-outline-danger">Part Time</a>
+                <a href="dashboard_part" class="btn-sm btn"  style="background-color: #25D366;">Part Time</a>
             </div>
             <?php endif ?>
             <div class="engage">
@@ -58,13 +58,13 @@ if(!logged_in()){
                         <p>Like and follow business and organisations/top brands pages and earn. Download and preview apps, post comment, subscribe, join groups to earn. The more pages you like and follow/subscribe, the more you earn.</p>
 
 
-                        <h6 class="pt-3 text-primary">Available tasks</h6>
+                        <h6 class="pt-3">Available tasks</h6>
                         <?php foreach($rowx as $row){  
                             $completed = new Completed($kon, $row['brand_id'], $uid); 
                             if(!$completed->isCompleted()){
                         ?>
                         <a href="tasks?brandID=<?= $row['brand_id'] ?>" class="">
-                            <div class="alert alert-primary" role="alert">                                
+                            <div class="alert" role="alert"  style="background-color: #25D366;">                                
                                 <div class="product-list">
                                     <img src="<?= Helper::admin_url() ?>assets/img/brand/<?= $row['logo'] ?>" class="product-img" alt="brand" width="40">
                                     <span><?= $row['name'] ?></span>
@@ -81,7 +81,7 @@ if(!logged_in()){
                     <div class="card-body">
                         <p>Earn by posting contents of businesses, organisations and top brands on your timeline.</p>
 
-                        <h6 class="pt-3 text-success">Available tasks</h6>
+                        <h6 class="pt-3">Available tasks</h6>
 
                         <?php foreach ($rows as $row) { 
                             $brand = new Brand($kon, $row['brand_id']); 
@@ -89,7 +89,7 @@ if(!logged_in()){
                             if(!$completed->isCompleted()){
                             ?>
                             <a href="posting?brandID=<?= $row['brand_id'] ?>" class="">
-                                <div class="alert alert-success" role="alert">
+                                <div class="alert" role="alert"  style="background-color: #25D366;">
                                     <div class="product-list">
                                         <img src="<?= Helper::admin_url() ?>assets/img/brand/<?= $brand->logo() ?>" class="product-img" alt="posting" width="40">
                                         <span><?= $brand->name() ?><span>

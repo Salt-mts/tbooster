@@ -16,10 +16,13 @@ header{
     align-items: center;
     width: 100%;
 }
+.menu-btn i{
+  color: #a11601;
+}
 .main-content{
     min-height: 80vh;
     padding: 70px 0;
-    background-color: #c8d4fa;
+    background-color: #2ea0f9;
 }
 .form{
     margin: auto;
@@ -154,3 +157,15 @@ header{
         width: 350px;
     }
 }
+
+
+.card{
+  border: none !important;
+}
+.card-header, .btn-my{
+  background-color: #1a3495 !important;
+  color: #fff;
+}
+/* .btn-my{
+  background-color: #1a3495 !important;
+} */

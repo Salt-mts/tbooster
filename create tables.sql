@@ -65,6 +65,9 @@ CREATE TABLE `users` (
   `bank` varchar(255) NULL,
   `acct_no` varchar(255) NULL,
   `jobpass` varchar(20) NOT NULL,
+  `referral_link` varchar(255) NOT NULL,
+  `referrer` varchar(255) NULL,
+  `ref_paid` int(11) DEFAULT(0),
   `date_added` varchar(255) NOT NULL,
   `status` int(11) DEFAULT(1)
 )
@@ -89,10 +92,11 @@ CREATE TABLE `brand` (
 CREATE TABLE `completed` (
   `id` int(11) NOT NULL AUTO_INCREMENT KEY,
   `user_id` varchar(255) NOT NULL,
-  `brand_id` varchar(255) UNIQUE NOT NULL,
+  `brand_id` varchar(255) NOT NULL,
   `brand_type` varchar(255) NOT NULL,
   `price` double NULL,
-  `status` int(11) DEFAULT(0),
+  `status` int(11) DEFAULT(1),
+  `payout_requested` int(11) DEFAULT(0),
   `is_paid` int(11) DEFAULT(0),
   `date_added` varchar(255) NOT NULL
 )
@@ -103,4 +107,9 @@ CREATE TABLE `jobpass` (
   `owner` varchar(255) NOT NULL,
   `pass` varchar(255) UNIQUE NOT NULL,
   `date_added` varchar(255) NOT NULL
+)
+
+CREATE TABLE `settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT KEY,
+  `referrer` double NULL
 )

@@ -44,7 +44,7 @@ if($completed->isCompleted()){
     </div>
     <header>
         <div class="header">
-            <div class="logo"><a href="dashboard.php"><img src="./assets/img/logo.png" alt="logo" width="150"></a></div>
+            <div class="logo"><a href="dashboard"><img src="./assets/img/logo.png" alt="logo" width="150"></a></div>
             <div class="hamburger">
                 <button class="btn menu-btn">
                     <i class="fa-solid fa-bars"></i>
@@ -60,13 +60,13 @@ if($completed->isCompleted()){
             <div class="engage">
                 <div class="card">
                     <div class="card-header">
-                        MTN Nigeria
+                        <h5><?= ucwords($brand->name()) ?></h5>
                     </div>
                     <div class="card-body">
-                        <div class="alert alert-primary" role="alert">
+                        <div class="alert" role="alert">
                             <?php if($follow->facebook() != '' || $follow->instagram() != '' || $follow->twitter() != '' || $follow->audiomack() != '' || $follow->youtube() != '' || $follow->tiktok() != '' || $follow->linkedin() != ''){ ?>
                             <div class="task-icons">
-                                <small>Click the icon to like, follow of Subscribe - &#8358;<?= number_format($follow->price(),2) ?></small>
+                                <small>Click the icon to like, follow or Subscribe - &#8358;<?= number_format($follow->price(),2) ?></small>
                                 <div class="like-icons task-icons">
                                     <?php if($follow->facebook() != ''){?>
                                         <a href="<?= $follow->facebook() ?>" target="_blank">
@@ -197,7 +197,7 @@ if($completed->isCompleted()){
                         </div>
                     </div>
                     <div class="p-3">
-                        <a onclick="return confirm('Are you sure you completed this tasks?')" href="tasks?brandID=<?= $brandID ?>&comp" class="btn btn-primary">I have completed this task</a>
+                        <button class="btn btn-sm btn-my buy-jobpass">I have completed this task</button>
                     </div>
                   </div>
             </div>
@@ -216,15 +216,37 @@ if($completed->isCompleted()){
     </div>
     <div class="menu-bg d-none"></div>
 
+    <div class="my-modal d-none">
+        <button class="btn close-my-modal"><i class="fa-solid fa-times"></i></button>
+        <div class="my-modal-items">
+            <div class="choose-agent">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title pb-3"><h6>Upload a screenshot of the completed task</h6></div>
+
+                        <form id="compForm">
+                            <input type="file" class="form-control" name="proof" required>
+                            <input type="hidden" name="type" value="<?= $brandType ?>" required>
+                            <input type="hidden" name="price" value="<?= $price ?>" required>
+                            <input type="hidden" name="bid" value="<?= $brandID ?>" required>
+                            <br>
+                            <button class="btn-sm btn btn-my text-light">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-modal-bg  d-none"></div>
+
     <!-- alert -->
     <div class="notify"></div>
     <script src="./assets/js/bootstrap.min.js"></script>
     <script src="./assets/js/main.js"></script>
     <script src="./assets/js/content.js"></script>
     <script>
-        /*
-        const agentForm = document.getElementById("agent-form")
-        agentForm.onsubmit = (e)=>{
+        const compForm = document.getElementById("compForm")
+        compForm.onsubmit = (e)=>{
             e.preventDefault()
             showLoader()
             ajax = new XMLHttpRequest()
@@ -233,7 +255,8 @@ if($completed->isCompleted()){
                     if(parseInt(ajax.responseText)==1){
                         hideLoader()
                         notifyUser("success", "Successful");
-                        agentForm.reset()
+                        location.reload()
+                        window.location = compForm.schedule.value
                     }else{
                         hideLoader()
                         notifyUser("danger", ajax.responseText);
@@ -241,11 +264,9 @@ if($completed->isCompleted()){
                 }
             }
             ajax.open("POST", "process.php", true)
-            const formData = new FormData(agentForm);
-            // console.log(formData)
+            const formData = new FormData(compForm);
             ajax.send(formData)
         }
-        */
-    </script>   
+    </script>
 </body>
 </html>

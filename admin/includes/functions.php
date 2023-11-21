@@ -41,7 +41,13 @@ function uploadImage($image, $imageFileType){
     }
 }
 
-
+function refBonus(){
+    global $kon;
+    $query = $kon->prepare("SELECT * FROM settings WHERE id = 1");
+    $query->execute();
+    $row = $query->fetch(PDO::FETCH_ASSOC);
+    return $row['referrer'];
+}
 function countVisit(){
     global $kon;
     if(!isset($_COOKIE['visitcount'])){

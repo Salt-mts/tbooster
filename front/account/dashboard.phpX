@@ -5,7 +5,7 @@ if(!logged_in()){
 }
 
 if($schedule == "full_time"){
-    $kweri = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'others' AND status = 1 ORDER BY id DESC");
+    $kweri = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'engagement' AND status = 1 ORDER BY id DESC");
     $kweri->execute();
     $rowx = $kweri->fetchAll(PDO::FETCH_ASSOC);
 
@@ -15,7 +15,7 @@ if($schedule == "full_time"){
 }
 
 if($schedule == "part_time"){
-    $kweri = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'others' AND schedule = '$schedule' AND status = 1 ORDER BY id DESC");
+    $kweri = $kon->prepare("SELECT * FROM brand WHERE brand_type = 'engagement' AND schedule = '$schedule' AND status = 1 ORDER BY id DESC");
     $kweri->execute();
     $rowx = $kweri->fetchAll(PDO::FETCH_ASSOC);
 

@@ -3,7 +3,7 @@
 @import url("components/main.css");
 
 .hero{
-  background-color: #F0EEF1;
+  background-color: #fff;
 }
 .hero-wrap, .about-wrap{
   display: grid;
@@ -16,6 +16,7 @@
   font-size: 40px;
   font-weight: 700;
   line-height: 35px;
+  color: #000;
 }
 .hero-img img{
   margin: auto;

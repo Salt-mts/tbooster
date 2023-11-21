@@ -27,15 +27,17 @@
         function status(){ return $this->data['status']; }
         function ispaid(){ return $this->data['is_paid']; }
         function date(){ return $this->data['date_added']; }
+        function proof(){ return $this->data['proof']; }
 
-        function add($brandType, $price){
+        function add($brandType, $price, $imgName){
             $date = date("F j, Y");
-            $stmt = $this->kon->prepare("INSERT INTO completed (user_id, brand_id, brand_type, price, date_added) VALUES (:uid, :bid, :bt, :pr, :dt)");
+            $stmt = $this->kon->prepare("INSERT INTO completed (user_id, brand_id, brand_type, price, date_added, proof) VALUES (:uid, :bid, :bt, :pr, :dt, :prf)");
 			$stmt->bindParam(":uid", $this->uid);
 			$stmt->bindParam(":bid", $this->bid);
 			$stmt->bindParam(":bt", $brandType);
 			$stmt->bindParam(":pr", $price);
 			$stmt->bindParam(":dt", $date);
+			$stmt->bindParam(":prf", $imgName);
 			return $stmt->execute();
         }
 

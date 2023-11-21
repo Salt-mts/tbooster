@@ -4,6 +4,12 @@ if(logged_in()){
     Helper::redirect("./account/dashboard");
 }
 
+if(isset($_GET['ref'])){
+    $refCode = $_GET['ref'];
+}else{
+    $refCode = "";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,29 +42,33 @@ if(logged_in()){
             <small class=""><i>Complete the form below</i></small><br><br>
             <form id="regform">
                 <div class="mb-2">
-                  <label for="names" class="form-label">Full Names</label>
+                  <label for="names" class="form-label">Full Names *</label>
                   <input type="text" class="form-control form-control-sm" id="names" name="fname" required>
                 </div>
                 <div class="mb-2">
-                    <label for="email" class="form-label">Email</label>
+                    <label for="email" class="form-label">Email *</label>
                     <input type="email" class="form-control form-control-sm" id="email" name="email" required>
                   </div>                
                 <div class="mb-2">
-                  <label for="phone" class="form-label">Phone</label>
+                  <label for="phone" class="form-label">Phone *</label>
                   <input type="number" class="form-control form-control-sm" id="phone" name="phone" min="1" required>
                 </div>
                 <div class="mb-2">
-                  <label for="jobpass" class="form-label">Job pass</label>
+                  <label for="jobpass" class="form-label">Job pass *</label>
                   <input type="text" class="form-control form-control-sm" id="jobpass" name="jobpass" required>
                   <small><i class="text-primary buy-jobpass" style="cursor: pointer;">Click here to buy a job pass code.</i></small>
                 </div>
                 <div class="mb-2">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label">Password *</label>
                     <input type="password" class="form-control form-control-sm" id="password" name="password" required>
                 </div>
                 <div class="mb-2">
-                    <label for="cpassword" class="form-label">Confirm Password</label>
+                    <label for="cpassword" class="form-label">Confirm Password *</label>
                     <input type="password" class="form-control form-control-sm" id="cpassword" name="cpassword" required>
+                </div>
+                <div class="mb-2">
+                    <label for="cpassword" class="form-label">Referrer</label>
+                    <input type="text" class="form-control form-control-sm" id="cpassword" name="referrer" value="<?= $refCode ?>">
                 </div>
                 <div class="mb-2">
                   <label class="form-label">Schedule</label>
@@ -87,6 +97,7 @@ if(logged_in()){
             <a href="./"><p>Home</p></a>
             <a href="./login"><p>Login</p></a>
             <a href="./register"><p>Register</p></a>
+            <a href="./terms"><p>Terms and Conditions</p></a>
         </div>
     </div>
     <div class="menu-bg d-none"></div>
@@ -99,23 +110,23 @@ if(logged_in()){
                     <div class="card-body">
                         <div class="card-title pb-3"><h5>Approved Team Booster Agents</h5></div>
 
-                        <a href="#" class="">
-                        <div class="c-agent alert alert-primary" role="alert">
+                        <a href="https://wa.link/saomtz" target="_blank">
+                        <div class="c-agent alert" role="alert" style="background-color: #25D366; font-weight: 600; color: #fff;">
                             MEGAMIKE
                         </div>
                         </a>
 
-                        <a href="#" class="">
-                        <div class="c-agent alert alert-warning" role="alert">
+                        <a href="https://wa.link/9e5g6r" target="_blank">
+                        <div class="c-agent alert" role="alert" style="background-color: #25D366; font-weight: 600; color: #fff;">
                             CEE J
                         </div>
                         </a>
 
-                        <a href="#" class="">
+                        <!-- <a href="#" target="_blank">
                         <div class="c-agent alert alert-danger" role="alert">
                             WILLAMS
                         </div>
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </div>

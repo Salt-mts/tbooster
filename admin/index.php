@@ -16,7 +16,11 @@ $kweri = $kon->prepare("SELECT * FROM users");
 $kweri->execute();
 $countAgent = $kweri->rowCount();
 
-$stmt = $kon->prepare("SELECT * FROM completed WHERE status = 0");
+// $stmt = $kon->prepare("SELECT * FROM completed WHERE status = 0");
+// $stmt->execute();
+// $countIssues= $stmt->rowCount();
+
+$stmt = $kon->prepare("SELECT DISTINCT user_id FROM completed WHERE payout_requested = 1");
 $stmt->execute();
 $countIssues= $stmt->rowCount();
 ?>
@@ -83,7 +87,7 @@ $countIssues= $stmt->rowCount();
                                 </div>
                             </div>
                             <div class="balance">
-                                <div class="balance-text">Pending Approval</div>
+                                <div class="balance-text">Pending Payments</div>
                                 <div class="balance-amount font-bold">
                                     <div class="the_price"><?= $countIssues ?></div>
                                 </div>

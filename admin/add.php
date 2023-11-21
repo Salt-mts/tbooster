@@ -154,8 +154,8 @@
                                 <div class="mb-3">
                                     <div style="display:flex; gap: 20px;">
                                         <span>
-                                            <label for="others" class="form-label">Others</label>
-                                            <input type="radio" value="others" id="others" name="type" checked>
+                                            <label for="engagement" class="form-label">Engagement</label>
+                                            <input type="radio" value="engagement" id="engagement" name="type" checked>
                                         </span>
                                         <span>
                                             <label for="post" class="form-label">Posting</label>

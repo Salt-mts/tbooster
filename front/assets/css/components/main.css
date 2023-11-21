@@ -17,6 +17,9 @@ header{
     align-items: center;
     width: 100%;
 }
+.menu-btn i{
+  color: #a11601;
+}
 .main-content{
     min-height: 80vh;
     padding: 70px 0;

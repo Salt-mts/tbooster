@@ -1,6 +1,7 @@
 <?php 
 require_once "includes/init.php";
-define("PAGE", "users");
+require_once "includes/functions.php";
+define("PAGE", "refbonus");
 if(!logged_in()){
     header("Location: login");
     exit();
@@ -9,6 +10,16 @@ $query = $kon->prepare("SELECT * FROM users ORDER BY id DESC");
 $query->execute();
 $rows = $query->fetchAll(PDO::FETCH_ASSOC);
 $n = 1;
+
+
+if(isset($_GET['markpaid'])){
+    $id = $_GET['markpaid'];
+    $uza = new User($kon, $id);
+    $done = $uza->setReferralAsPaid();
+    if($done){
+        Helper::redirect("refBonus");
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +33,7 @@ $n = 1;
     <link href="./assets/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="./assets/css/dataTables.bootstrap5.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./assets/css/styles.css">
-    <title>Users | Admin</title>
+    <title>Pending Payments | Admin</title>
 </head>
 <body>
     <nav>
@@ -59,7 +70,7 @@ $n = 1;
             <div class="dashboard__main__content__container">
                 <div class="dashboard__main__content__row">
                     <div class="dashboard__main__content__row__item">
-                        <h1 class="dashboard__main__content__pagetitle">Users</h1> 
+                        <h1 class="dashboard__main__content__pagetitle">Pending Referral Bonus</h1> 
                         <p class="dashboard__main__content__pagecaption light-text">
                             
                         </p>
@@ -71,26 +82,39 @@ $n = 1;
                                     <tr>
                                         <th>S/N</th>
                                         <th>Names</th>
-                                        <th>Email</th>
-                                        <th>Type</th>
+                                        <th>Bank</th>
+                                        <th>Acct No</th>
+                                        <th>Number of referrals</th>
+                                        <th>Amount</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php  foreach ($rows as $row) { ?>   
+                                    <?php  foreach ($rows as $row) { 
+                                        $user = new User($kon, $row['id']);
+                                        if($user->countReferred()>0){
+                                    ?>   
                                     <tr>
                                         <td><?= $n++ ?></td>
-                                        <td><?= $row['fullname'] ?></td>
-                                        <td><?= $row['email'] ?></td>
-                                        <td><?= $row['schedule'] ?></td>        
+                                        <td><?= $user->fullname() ?></td>     
+                                        <td><?= $user->bank() ?></td>     
+                                        <td><?= $user->acctNo() ?></td>     
+                                        <td><?= $user->countReferred() ?></td>     
+                                        <td>&#8358;<?= $user->countReferred()*refBonus() ?></td>     
+                                        <td>
+                                            <a onclick="return confirm('Are you sure you have paid this user?')" class="primary-btn-sm" href="refBonus?markpaid=<?= $row['id'] ?>">Mark as Paid</a>
+                                        </td>
                                     </tr> 
-                                    <?php } ?>                                   
+                                    <?php }} ?>                                   
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>S/N</th>
                                         <th>Names</th>
-                                        <th>Email</th>
-                                        <th>Type</th>
+                                        <th>Bank</th>
+                                        <th>Acct No</th>
+                                        <th>Number of referrals</th>
+                                        <th>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>

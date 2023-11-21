@@ -15,7 +15,6 @@ class Helper{
 	}	
 	public static function siteEmail(){
 		return "support@tbooster.com";
-		// return "mo6014245571@gmail.com";
 	}
 	public static function sitePhone(){
 		return "0801-234-5678";

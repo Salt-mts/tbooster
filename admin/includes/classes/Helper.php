@@ -3,28 +3,24 @@
 class Helper{
 
 	public static function siteName(){
-		return "Solar Oja";
-	}
-	public static function siteName1(){
-		return "Solar Oja";
+		return "Team Booster";
 	}
 	public static function site_url(){
-		// return "https://solaroja.com/shop/";
-		return "https://localhost/projects/cat-companys/Solar%20Oja/shop/";
+		// return "https://tboosters.com/";
+		return "http://localhost/projects/cat-clients/tbooster/";
 	}
 	public static function admin_url(){
-		// return "https://solaroja.com/0app/";
-		return "https://localhost/projects/cat-companys/Solar%20Oja/solar-admin/";
+		// return "https://tboosters.com/fr/";
+		return "http://localhost/projects/cat-clients/tbooster/admin/";
 	}	
 	public static function siteEmail(){
-		return "support@solaroja.com";
-		// return "mo6014245571@gmail.com";
+		return "support@tbooster.com";
 	}
 	public static function sitePhone(){
 		return "0801-234-5678";
 	}
 	public static function imagePath(){
-		return Helper::admin_url()."img/products/";
+		return Helper::admin_url()."assets/img/products/";
 	}
 	public static function redirect($location){
 		header("location: $location");
@@ -33,10 +29,10 @@ class Helper{
 		return "&#8358; ";
 	}
 	public static function date(){
-		return date("F d Y, g:i a");
+		return date("F d, Y - g:i a");
 	}
 	public static function logo(){
-		return Helper::site_url()."assets/img/logo/logo.png";
+		return Helper::site_url()."assets/img/logo.png";
 	}
 
 	public static function alert(){

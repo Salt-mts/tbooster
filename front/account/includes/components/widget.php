@@ -2,5 +2,5 @@
 require_once("includes/init.php");
 
 ?>
-<h5><?= $fullname ?></h5>
-<p>Current earnings: &#8358; <?= $user->totalUnpaid($uid) ?></p>
+<h5 class="text-light"><?= $fullname ?></h5>
+<p class="text-light">Current earnings: &#8358; <?= number_format($user->totalUnpaid($uid),2) ?></p>

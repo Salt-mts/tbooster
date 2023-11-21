@@ -4,11 +4,11 @@ if(!logged_in()){
     Helper::redirect("../login");
 }
 
-$kweri = $kon->prepare("SELECT * FROM completed WHERE brand_type = 'others' AND user_id = '$uid' ORDER BY id DESC");
+$kweri = $kon->prepare("SELECT * FROM completed WHERE brand_type = 'engagement' AND user_id = '$uid' ORDER BY id DESC LIMIT 5");
 $kweri->execute();
 $rowx = $kweri->fetchAll(PDO::FETCH_ASSOC);
 
-$query = $kon->prepare("SELECT * FROM completed WHERE brand_type = 'posting' AND user_id = '$uid' ORDER BY id DESC");
+$query = $kon->prepare("SELECT * FROM completed WHERE brand_type = 'posting' AND user_id = '$uid' ORDER BY id DESC LIMIT 5");
 $query->execute();
 $rows = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -47,7 +47,7 @@ $rows = $query->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="engage">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header text-light bg-primary">
                       Completed Engagement Task
                     </div>
                     <div class="card-body">
@@ -64,7 +64,7 @@ $rows = $query->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header text-light bg-primary">
                       Completed Posting Task
                     </div>
                     <div class="card-body">

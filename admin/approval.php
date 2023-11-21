@@ -5,24 +5,16 @@ if(!logged_in()){
     header("Location: login");
     exit();
 }
-$query = $kon->prepare("SELECT * FROM completed WHERE is_paid = 0 ORDER BY id DESC");
+$query = $kon->prepare("SELECT DISTINCT user_id FROM completed WHERE payout_requested = 1 ORDER BY id DESC");
 $query->execute();
 $rows = $query->fetchAll(PDO::FETCH_ASSOC);
 $n = 1;
 
-if(isset($_GET['approveit'])){
-    $id = $_GET['approveit'];
-    $query = $kon->prepare("UPDATE completed SET status = 1 WHERE id = '$id' ");
-    $done = $query->execute();
-    if($done){
-        Helper::redirect("approval");
-    }
-}
 
 if(isset($_GET['markpaid'])){
     $id = $_GET['markpaid'];
-    $query = $kon->prepare("UPDATE completed SET is_paid = 1 WHERE id = '$id' ");
-    $done = $query->execute();
+    $uza = new User($kon, $id);
+    $done = $uza->setPendingAsPaid();
     if($done){
         Helper::redirect("approval");
     }
@@ -40,7 +32,7 @@ if(isset($_GET['markpaid'])){
     <link href="./assets/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="./assets/css/dataTables.bootstrap5.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./assets/css/styles.css">
-    <title>Pending Approval | Admin</title>
+    <title>Pending Payments | Admin</title>
 </head>
 <body>
     <nav>
@@ -77,7 +69,7 @@ if(isset($_GET['markpaid'])){
             <div class="dashboard__main__content__container">
                 <div class="dashboard__main__content__row">
                     <div class="dashboard__main__content__row__item">
-                        <h1 class="dashboard__main__content__pagetitle">Pending Approval</h1> 
+                        <h1 class="dashboard__main__content__pagetitle">Pending Payments</h1> 
                         <p class="dashboard__main__content__pagecaption light-text">
                             
                         </p>
@@ -88,34 +80,25 @@ if(isset($_GET['markpaid'])){
                                 <thead>
                                     <tr>
                                         <th>S/N</th>
-                                        <th>User</th>
-                                        <th>Brand</th>
-                                        <th>Price</th>
-                                        <th>Type</th>
-                                        <th>Status</th>
-                                        <th>Payment</th>
+                                        <th>Names</th>
+                                        <th>Bank</th>
+                                        <th>Acct No</th>
+                                        <th>Pending Payment</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php  foreach ($rows as $row) { 
-                                        $brand = new Brand($kon, $row['brand_id'])
+                                        $user = new User($kon, $row['user_id'])
                                     ?>   
                                     <tr>
                                         <td><?= $n++ ?></td>
-                                        <td><?= $row['user_id'] ?></td>
-                                        <td><?= $brand->name() ?></td>
-                                        <td><?= number_format($row['price'],2) ?></td>  
-                                        <td><?= $row['brand_type'] ?></td>
-                                        <td><?= $row['status'] == 1?'Approved':'Pending Approval' ?></td>  
-                                        <td><?= $row['is_paid'] == 1?'Paid':'Not Paid' ?></td>      
+                                        <td><?= $user->fullname() ?></td>     
+                                        <td><?= $user->bank() ?></td>     
+                                        <td><?= $user->acctNo() ?></td>     
+                                        <td><?= number_format($user->totalPendingPayment(),2) ?></td>     
                                         <td>
-                                        <?php if($row['status']){ ?>
-                                            <a onclick="return confirm('Are you sure you have paid this user?')" class="primary-btn-sm" href="approval?markpaid=<?= $row['id'] ?>">Paid</a>
-                                        <?php }else{ ?>
-                                            <a onclick="return confirm('Are you sure this user have completed the task?')" class="primary-btn-sm" href="approval?approveit=<?= $row['id'] ?>">Approve</a>
-                                        <?php } ?>
-
+                                            <a onclick="return confirm('Are you sure you have paid this user?')" class="primary-btn-sm" href="approval?markpaid=<?= $row['user_id'] ?>">Mark as Paid</a>
                                         </td>
                                     </tr> 
                                     <?php } ?>                                   
@@ -123,12 +106,10 @@ if(isset($_GET['markpaid'])){
                                 <tfoot>
                                     <tr>
                                         <th>S/N</th>
-                                        <th>User</th>
-                                        <th>Brand</th>
-                                        <th>Price</th>
-                                        <th>Type</th>
-                                        <th>Status</th>
-                                        <th>Payment</th>
+                                        <th>Names</th>
+                                        <th>Bank</th>
+                                        <th>Acct No</th>
+                                        <th>Pending Payment</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>

@@ -43,7 +43,7 @@ if($completed->isCompleted()){
     </div>
     <header>
         <div class="header">
-            <div class="logo"><a href="dashboard.php"><img src="./assets/img/logo.png" alt="logo" width="150"></a></div>
+            <div class="logo"><a href="dashboard"><img src="./assets/img/logo.png" alt="logo" width="150"></a></div>
             <div class="hamburger">
                 <button class="btn menu-btn">
                     <i class="fa-solid fa-bars"></i>
@@ -59,7 +59,7 @@ if($completed->isCompleted()){
             <div class="engage">
                 <div class="card">
                     <div class="card-header">
-                    <?= $brand->name() ?> - &#8358;<?= number_format($posting->price(),2) ?>
+                    <h5><?= $brand->name() ?> - &#8358;<?= number_format($posting->price(),2) ?><h5>
                     </div>
                     <div class="card-body">
                         <div class="">
@@ -75,16 +75,26 @@ if($completed->isCompleted()){
                               <input type="text" id="copy-url" class="form-control form-control-sm" id="posturl" value="<?= $posting->link() ?>">
                             </div>
                             <div class="col-auto">
-                              <button type="submit" id="copy-btn" class="btn btn-sm btn-secondary" onclick="myFunction()">Copy</button>
-                              <input type="hidden" id="brand-id" value="<?= $brandID ?>">
-                              <input type="hidden" id="brand-type" value="<?= $brandType ?>">
-                              <input type="hidden" id="brand-price" value="<?= $price ?>">
+                              <button type="submit" id="copy-btn" class="btn btn-sm btn-my" onclick="myFunction()">Copy</button>
                             </div>
                             <p><small>Copy the product link and post it on any of your social media handles.</small></p>
+
+                            
                         </div>
                     </div>
-                    <div class="p-3 d-none">
-                        <a onclick="return confirm('Are you sure you completed this tasks?')" href="posting?brandID=<?= $brandID ?>&comp" class="btn btn-success">I have completed this task</a>
+                    <div class="p-3">
+                        <button class="btn btn-sm btn-my " id="task-comp">I have completed this task</button>
+
+                        
+                        <form id="compForm" class="d-none alert alert-warning">
+                        <div class="card-title pb-3"><h6>Upload a screenshot of the completed task</h6></div>
+                            <input type="file" class="form-control" name="proof" required>
+                            <input type="hidden" name="type" value="<?= $brandType ?>" required>
+                            <input type="hidden" name="price" value="<?= $price ?>" required>
+                            <input type="hidden" name="bid" value="<?= $brandID ?>" required>
+                            <br>
+                            <button class="btn-sm btn btn-my text-light">Send</button>
+                        </form>
                     </div>
                   </div>
             </div>
@@ -94,6 +104,8 @@ if($completed->isCompleted()){
         <div class="footer">
           <p>  &copy; <span class="fyear"></span> Team Booster</p>
         </div>
+        <!-- // set jobpass to avoid JS error -->
+        <div class="buy-jobpass"></div>
     </footer>
     <div class="menu d-none">
         <button class="btn close-menu"><i class="fa-solid fa-times"></i></button>
@@ -112,28 +124,21 @@ if($completed->isCompleted()){
                     <div class="card-body">
                         <div class="card-title pb-3"><h5>Accelerate Ads</h5></div>
 
-                        <a href="https://web.facebook.com/" target="_blank" class="post-final" onclick="addCredit()">
+                        <a href="https://web.facebook.com/" target="_blank" class="post-final">
                         <div class="c-agent d-flex gap-3 align-items-center alert alert-primary" role="alert">
                             <img src="./assets/img/icons/facebook.png" alt="facebook" width="40">
                             Facebook
                         </div>
                         </a>
 
-                        <a href="https://twitter.com/" target="_blank" class="post-final" onclick="addCredit()">
+                        <a href="https://twitter.com/" target="_blank" class="post-final">
                         <div class="c-agent d-flex gap-3 align-items-center alert alert-primary" role="alert">
                             <img src="./assets/img/icons/twitter.png" alt="twitter" width="40">
                             Twitter
                         </div>
                         </a>
 
-                        <a href="https://web.whatsapp.com/" target="_blank" class="post-final" onclick="addCredit()">
-                        <div class="c-agent d-flex gap-3 align-items-center alert alert-primary" role="alert">
-                            <img src="./assets/img/icons/whatsapp.png" alt="whatsapp" width="40">
-                            Whatsapp
-                        </div>
-                        </a>
-
-                        <a href="https://instagram.com/" target="_blank" class="post-final" onclick="addCredit()">
+                        <a href="https://instagram.com/" target="_blank" class="post-final">
                         <div class="c-agent d-flex gap-3 align-items-center alert alert-primary" role="alert">
                             <img src="./assets/img/icons/instagram.png" alt="instagram" width="40">
                             Instagram
@@ -151,6 +156,7 @@ if($completed->isCompleted()){
     <div class="notify"></div>
     <script src="./assets/js/bootstrap.min.js"></script>
     <script src="./assets/js/main.js"></script> 
+    <script src="./assets/js/content.js"></script> 
     <script>
         const copyUrl = document.getElementById("copy-url")
 
@@ -167,54 +173,58 @@ if($completed->isCompleted()){
         notifyUser("success", "Copied successfully")
         openMyModal()
         }
-
-
-        // my modal
-        const myModal = document.querySelector(".my-modal")
-        const myModalBg = document.querySelector(".my-modal-bg")
-        const closeMyModalBtn = document.querySelector(".close-my-modal")
-
-
-        closeMyModalBtn.onclick = ()=>{
-            closeMyModal()
-        }
-        myModalBg.onclick = ()=>{
-            closeMyModal()
-        }
-
-
-        function openMyModal(){
-            myModal.classList.remove("d-none")
-            myModal.classList.add("puff-in-center")
-            myModalBg.classList.remove("d-none")
-        }
-        function closeMyModal(){
-            myModal.classList.add("d-none")
-            myModal.classList.remove("puff-in-center")
-            myModalBg.classList.add("d-none")
-        }
         
-        function addCredit(){
 
-            const bid = document.getElementById("brand-id")
-            const bpr = document.getElementById("brand-price")
-            const typ = document.getElementById("brand-type")
-            
+        const completedBtn = document.getElementById("task-comp")
+        completedBtn.onclick=()=>{
+            completedBtn.classList.add("d-none")
+            compForm.classList.remove("d-none")
+        }
+
+        const compForm = document.getElementById("compForm")
+        compForm.onsubmit = (e)=>{
+            e.preventDefault()
+            showLoader()
             ajax = new XMLHttpRequest()
             ajax.onload = ()=>{
                 if(ajax.readyState == 4 && ajax.status == 200){
                     if(parseInt(ajax.responseText)==1){
+                        hideLoader()
                         notifyUser("success", "Successful");
-                        agentForm.reset()
+                        location.reload()
+                        window.location = compForm.schedule.value
                     }else{
+                        hideLoader()
                         notifyUser("danger", ajax.responseText);
                     }
                 }
             }
             ajax.open("POST", "process.php", true)
-            ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            ajax.send(`price=${bpr.value}&bid=${bid.value}&type=${typ.value}`)
+            const formData = new FormData(compForm);
+            ajax.send(formData)
         }
+        
+        // function addCredit(){
+
+        //     const bid = document.getElementById("brand-id")
+        //     const bpr = document.getElementById("brand-price")
+        //     const typ = document.getElementById("brand-type")
+            
+        //     ajax = new XMLHttpRequest()
+        //     ajax.onload = ()=>{
+        //         if(ajax.readyState == 4 && ajax.status == 200){
+        //             if(parseInt(ajax.responseText)==1){
+        //                 notifyUser("success", "Successful");
+        //                 agentForm.reset()
+        //             }else{
+        //                 notifyUser("danger", ajax.responseText);
+        //             }
+        //         }
+        //     }
+        //     ajax.open("POST", "process.php", true)
+        //     ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        //     ajax.send(`price=${bpr.value}&bid=${bid.value}&type=${typ.value}`)
+        // }
 
     </script>
 </body>

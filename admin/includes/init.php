@@ -21,11 +21,11 @@ try {
 
 // ****************initialization****************
 date_default_timezone_set('Africa/Lagos');
-// error_reporting(0);
+error_reporting(0);
 
 
 function logged_in(){
-	if (isset($_SESSION['irsLOgin'])) {
+	if (isset($_SESSION['tboostAdmin'])) {
 		return true;
 	}else{
 		return false;
@@ -36,6 +36,7 @@ function logged_in(){
 // ******************logout function******************
 function logout(){
 	session_destroy();
+	setcookie("tboostAdmin", "", time() - (18000 * 1), "/");
 	header("Location: login");
 }
 

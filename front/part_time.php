@@ -43,6 +43,7 @@
             <a href="./"><p>Home</p></a>
             <a href="./login"><p>Login</p></a>
             <a href="./register"><p>Register</p></a>
+            <a href="./terms"><p>Terms and Conditions</p></a>
         </div>
     </div>
     <div class="menu-bg d-none"></div>

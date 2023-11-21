@@ -4,23 +4,21 @@ if(!logged_in()){
     Helper::redirect("../login");
 }
 
-if(isset($_POST['update'])){
-    $opass = Sanitizer::sanitizeInput($_POST['opass']);
-    $npass = Sanitizer::sanitizeInput($_POST['npass']);
-    $cpass = Sanitizer::sanitizeInput($_POST['cpass']);
+if($user->bank() != ''){
+    Helper::redirect("profile");
+}
 
-    if(empty($opass) || empty($npass) || empty($cpass)){
+if(isset($_POST['updatebnk'])){
+    $fname = Sanitizer::sanitizeInput($_POST['fname']);
+    $bank = Sanitizer::sanitizeInput($_POST['bank']);
+    $acctno = Sanitizer::sanitizeInput($_POST['acctno']);
+
+    if(empty($fname) || empty($bank) || empty($acctno)){
         $msg = "All fields are required";
-    }elseif(strlen($npass) < 6){
-        $msg = "Password must be 6 character and above";
-    }elseif($npass != $cpass){
-        $msg = "Password doesn't match";
-    }elseif(!$user->verifyPassword($opass)){
-        $msg = "Incorrect password";
     }else{
-        $done = $user->updatePassword($npass);
+        $done = $user->updateBank($fname, $bank, $acctno);
         if($done){
-            Helper::redirect('./update-success.php');
+            Helper::redirect('./profile');
         }
     }
 }
@@ -59,15 +57,21 @@ if(isset($_POST['update'])){
             <div class="engage">
                 <div class="card">
                     <div class="card-header">
-                      <h6>Update Password</h6>
+                      <h6>Add Bank Account</h6>
                     </div>
                     <div class="card-body">
                         <form action="" method="POST">
                             <div class="py-2"><?= @$msg ?></div>
-                            <input type="password" placeholder="Current Password" class="my-3 form-control" name="opass" required>
-                            <input type="password" placeholder="New Password" class="my-3 form-control" name="npass" required>
-                            <input type="password" placeholder="Confirm Password" class="my-3 form-control" name="cpass" required>
-                            <button class="btn btn-my" type="submit" name="update">Send</button>
+
+                            <input type="text" placeholder="Full names" class="my-3 form-control" value="<?= $user->fullname() ?>"  name="fname" required>
+
+                            <input type="text" placeholder="Bank name" class="my-3 form-control" name="bank" required>
+
+                            <input type="text" placeholder="Account number" class="my-3 form-control" name="acctno" required>
+
+                            <p class="alert alert-danger"><small><i>Enter a correct account details, you cannot edit your account details after submission.</i></small></p>
+
+                            <button class="btn btn-sm btn-my" type="submit" name="updatebnk">Send</button>
                         </form>
                     </div>
                 </div>

@@ -6,15 +6,15 @@
 	class User 
 	{
 		private $kon;
-		private $email;
+		private $uid;
 
-		function __construct($kon, $email)
+		function __construct($kon, $uid)
 		{
 			$this->kon = $kon;
-			$this->email =$email;
+			$this->uid =$uid;
 
-			$stmt = $this->kon->prepare("SELECT * FROM uza WHERE email = :em ");
-			$stmt->bindParam("em", $this->email);
+			$stmt = $this->kon->prepare("SELECT * FROM users WHERE id = :em ");
+			$stmt->bindParam("em", $this->uid);
 			$stmt->execute();
 
 			$this->data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -22,59 +22,65 @@
 
 
 		public function id(){
-			return $this->data['user_id'];
-		}
-		public function unik(){
-			return $this->data['unique_id'];
+			return $this->data['id'];
 		}
 		public function password(){
 			return $this->data['password'];
 		}
-		public function firstname(){
-			return $this->data['fname'];
-		}
-		public function lastname(){
-			return $this->data['lname'];
-		}
 		public function fullname(){
-			return $this->firstname()." ".$this->lastname();
+			return $this->data['fullname'];
 		}
+		public function acctNo(){
+			return $this->data['acct_no'];
+		}
+		public function bank(){			
+			return $this->data['bank'];
+		}		
 		public function email(){			
 			return $this->data['email'];
 		}		
 		public function regDate(){
-			return $this->data['reg_date'];
+			return $this->data['date_added'];
+		}
+		public function status(){
+			return $this->data['status'];
+		}
+		public function schedule(){
+			return $this->data['schedule'];
+		}
+		public function referral(){
+			return $this->data['referral_link'];
+		}
+		public function referrer(){
+			return $this->data['referrer'];
 		}
 
-
-		public function updateProfile($fname, $lname,$mname, $phone, $country, $city, $state, $addr, $occ, $dob){
-			$stmt = $this->kon->prepare("UPDATE uza SET firstname = :fn, lastname = :ln, middlename = :mn, dob = :dob, phone = :ph, addr = :addr, state = :st, country = :ctry, city = :cty, occupation = :occ WHERE email = :em ");
-			$stmt->bindParam(":fn", $fname);
-			$stmt->bindParam(":ln", $lname);
-			$stmt->bindParam(":mn", $mname);
-			$stmt->bindParam(":ph", $phone);
-			$stmt->bindParam(":ctry", $country);
-			$stmt->bindParam(":cty", $city);
-			$stmt->bindParam(":st", $state);
-			$stmt->bindParam(":addr", $addr);
-			$stmt->bindParam(":occ", $occ);
-			$stmt->bindParam(":dob", $dob);
-			$stmt->bindParam(":em", $this->email);
+		function totalPendingPayment(){
+			$stmt = $this->kon->prepare("SELECT SUM(price) AS sum FROM completed WHERE user_id = :uid AND status = 1 AND payout_requested = 1 AND is_paid = 0 ");
+			$stmt->bindParam(":uid", $this->uid);
+			$stmt->execute();
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $row['sum'];
+		}
+		function setPendingAsPaid(){
+			$stmt = $this->kon->prepare("UPDATE completed SET is_paid = 1, payout_requested = 0 WHERE user_id = :uid AND status = 1 AND payout_requested = 1 AND is_paid = 0 ");
+			$stmt->bindParam(":uid", $this->uid);
 			return $stmt->execute();
 		}
 
-
-		function verifyPassword($oldPassword){
-			if(password_verify($oldPassword, $this->password())){
-				return true;				
-			}
+		function countReferred(){
+			$ref = $this->referral();
+			$stmt = $this->kon->prepare("SELECT * FROM users WHERE referrer = :refl AND ref_paid = 0");
+			$stmt->bindParam(":refl",$ref);
+			$stmt->execute();
+			$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			return $stmt->rowCount();
 		}
 
-		public function updatePassword($newPassword){
-			$pass = password_hash($newPassword, PASSWORD_DEFAULT);
-			$stmt = $this->kon->prepare("UPDATE uza SET password = :pw WHERE email = :em ");
-			$stmt->bindParam(":pw", $pass);
-			$stmt->bindParam(":em", $this->email);
+		function setReferralAsPaid(){
+			$ref = $this->referral();
+			$stmt = $this->kon->prepare("UPDATE users SET ref_paid = 1 WHERE referrer = :refl AND ref_paid = 0");
+			$stmt->bindParam(":refl", $ref);
 			return $stmt->execute();
 		}
 

@@ -34,6 +34,8 @@ if(isset($_POST['fname'])  && isset($_POST['phone'])){
     $password = Sanitizer::sanitizeInput($_POST['password']); 
     $cpassword = Sanitizer::sanitizeInput($_POST['cpassword']); 
     $schedule = Sanitizer::sanitizeInput($_POST['schedule']); 
+    $ref = Sanitizer::sanitizeInput($_POST['referrer']); 
+    $rLink = Helper::randomString(10);
 
     $date = Helper::date();
    
@@ -56,13 +58,15 @@ if(isset($_POST['fname'])  && isset($_POST['phone'])){
         exit();
     }else{
         $password = md5($password);
-        $query = $kon->prepare("INSERT INTO users(email, password, schedule, fullname, jobpass, date_added) VALUES(:em, :pw, :sch, :fn, :jp, :dt)");
+        $query = $kon->prepare("INSERT INTO users(email, password, schedule, fullname, jobpass, date_added, referral_link, referrer) VALUES(:em, :pw, :sch, :fn, :jp, :dt, :refl, :refr)");
         $query->bindParam(":em", $email);
         $query->bindParam(":pw", $password);
         $query->bindParam(":sch", $schedule);
         $query->bindParam(":fn", $fname);
         $query->bindParam(":jp", $jobpass);
         $query->bindParam(":dt", $date);
+        $query->bindParam(":refl", $rLink);
+        $query->bindParam(":refr", $ref);
         $done = $query->execute();
         if($done){
             echo 1;

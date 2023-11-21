@@ -1,14 +1,24 @@
 <?php 
 require_once "includes/init.php";
-define("PAGE", "users");
+define("PAGE", "proof");
 if(!logged_in()){
     header("Location: login");
     exit();
 }
-$query = $kon->prepare("SELECT * FROM users ORDER BY id DESC");
+$query = $kon->prepare("SELECT * FROM completed WHERE status = 1 AND is_paid = 0 ORDER BY id DESC");
 $query->execute();
 $rows = $query->fetchAll(PDO::FETCH_ASSOC);
 $n = 1;
+
+
+if(isset($_GET['markpaid'])){
+    $id = $_GET['markpaid'];
+    $uza = new User($kon, $id);
+    $done = $uza->setPendingAsPaid();
+    if($done){
+        Helper::redirect("approval");
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +32,7 @@ $n = 1;
     <link href="./assets/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="./assets/css/dataTables.bootstrap5.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./assets/css/styles.css">
-    <title>Users | Admin</title>
+    <title>Pending Payments | Admin</title>
 </head>
 <body>
     <nav>
@@ -59,7 +69,7 @@ $n = 1;
             <div class="dashboard__main__content__container">
                 <div class="dashboard__main__content__row">
                     <div class="dashboard__main__content__row__item">
-                        <h1 class="dashboard__main__content__pagetitle">Users</h1> 
+                        <h1 class="dashboard__main__content__pagetitle">Pending Payments</h1> 
                         <p class="dashboard__main__content__pagecaption light-text">
                             
                         </p>
@@ -71,17 +81,17 @@ $n = 1;
                                     <tr>
                                         <th>S/N</th>
                                         <th>Names</th>
-                                        <th>Email</th>
-                                        <th>Type</th>
+                                        <th>Screenshot</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php  foreach ($rows as $row) { ?>   
+                                    <?php  foreach ($rows as $row) { 
+                                        $user = new User($kon, $row['user_id'])
+                                    ?>   
                                     <tr>
                                         <td><?= $n++ ?></td>
-                                        <td><?= $row['fullname'] ?></td>
-                                        <td><?= $row['email'] ?></td>
-                                        <td><?= $row['schedule'] ?></td>        
+                                        <td><?= $user->fullname() ?></td>     
+                                        <td><img src="<?= Helper::site_url()?>account/assets/img/proof/<?= $row['proof']?>" alt="proof" width="40"></td>
                                     </tr> 
                                     <?php } ?>                                   
                                 </tbody>
@@ -89,8 +99,7 @@ $n = 1;
                                     <tr>
                                         <th>S/N</th>
                                         <th>Names</th>
-                                        <th>Email</th>
-                                        <th>Type</th>
+                                        <th>Bank</th>
                                     </tr>
                                 </tfoot>
                             </table>

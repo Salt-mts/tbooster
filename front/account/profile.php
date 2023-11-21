@@ -39,32 +39,63 @@ if(!logged_in()){
             </div>
             <div class="engage">
                 <div class="card">
-                    <div class="card-header">
-                      Profile
+                    <div class="card-header text-light bg-primary">
+                      <h5>Profile</h5>
                     </div>
                     <div class="card-body">
-                        <div class="d-flex gap-3">
+                        <div class="d-flex gap-2">
                             <p>Names:</p>
                             <p><?= $fullname ?></p>
                         </div>
-                        <div class="d-flex gap-3">
+                        <div class="d-flex gap-2">
                             <p>Email:</p>
                             <p><?= $email ?></p>
                         </div>
-                        <div class="d-flex gap-3">
+                        <div class="d-flex gap-2">
                             <p>Job type:</p>
                             <p><?= $user->schedule() ?></p>
                         </div>
-                        <div class="d-flex gap-3">
+                        <div class="d-flex gap-2">
                             <p>Current Earnings:</p>
-                            <p><?= $user->totalUnpaid($uid) ?></p>
+                            <p>
+                                <?= number_format($user->totalUnpaid($uid), 2) ?>
+                                <?= $user->canCashOut($uid)?'
+                                <span><button id="payout" class="btn btn-sm btn-warning">Pay out</button></span>':''; ?>
+                            </p>
                         </div>
-                        <div class="d-flex gap-3">
+                        <div class="d-flex gap-2">
+                            <p>Pending Payment:</p>
+                            <p>
+                                <?= number_format($user->totalPendingPayment($uid), 2) ?>
+                            </p>
+                        </div>
+                        <div class="d-flex gap-2">
                             <p>Total Earnings:</p>
-                            <p><?= $user->totalPaid($uid) ?></p>
+                            <p><?= number_format($user->totalPaid($uid), 2) ?> </p>
                         </div>
-                        <div class="py-3">
-                            <a class="text-primary" href="./update-password">Change password</a>
+                        <div class="d-flex gap-2">
+                            <p>Referral code:</p>
+                            <p><?= $user->referral() ?> </p>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <p>Referral Link:</p>
+                            <p style="padding:7px;background-color:#f5f5f5;"><?= Helper::site_url().'register?ref='. $user->referral() ?> </p>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <p>Bank name:</p>
+                            <p><?= $user->bank() ?> </p>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <p>Account number:</p>
+                            <p><?= $user->acctNo() ?> </p>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <p>Referrals:</p>
+                            <p><?= $user->countReferred() ?> </p>
+                        </div>
+                        <div class="py-3 d-flex gap-4">
+                            <?= $user->bank() == ''?'<a class="btn btn-sm btn-warning" href="./update-bank">Add Bank Account</a>':''; ?>
+                            <a class="btn btn-sm btn-my" href="./update-password">Change password</a>
                         </div>
                     </div>
                 </div>
@@ -85,12 +116,14 @@ if(!logged_in()){
     </div>
     <div class="menu-bg d-none"></div>
 
+    <!-- alert -->
+    <div class="notify"></div>
     <script src="./assets/js/bootstrap.min.js"></script>
     <script src="./assets/js/main.js"></script>
     <script>
-        /*
-        const agentForm = document.getElementById("agent-form")
-        agentForm.onsubmit = (e)=>{
+        
+        const payOut = document.getElementById("payout")
+        payOut.onclick = (e)=>{
             e.preventDefault()
             showLoader()
             ajax = new XMLHttpRequest()
@@ -99,19 +132,17 @@ if(!logged_in()){
                     if(parseInt(ajax.responseText)==1){
                         hideLoader()
                         notifyUser("success", "Successful");
-                        agentForm.reset()
+                        location.reload()
                     }else{
                         hideLoader()
-                        notifyUser("danger", ajax.responseText);
+                        notifyUser("danger", "Not successful! Try again");
                     }
                 }
             }
             ajax.open("POST", "process.php", true)
-            const formData = new FormData(agentForm);
-            // console.log(formData)
-            ajax.send(formData)
+            ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            ajax.send("payout")
         }
-        */
     </script>   
 </body>
 </html>

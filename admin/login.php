@@ -7,8 +7,14 @@ if(logged_in()){
 if (isset($_POST['login'])) {
     $pass = $_POST['pass'];
 
-    if($pass === "password"){
-        $_SESSION['irsLOgin'] = "$uname";
+    $query = $kon->prepare("SELECT password FROM admins WHERE id = 1");
+    $query->execute();
+    $row = $query->fetch(PDO::FETCH_ASSOC);
+    $dbPass = $row["password"];
+
+    if($pass === $dbPass){
+        $_SESSION['tboostAdmin'] = "$uname";
+        setcookie("tboostAdmin", $uname, time() + (18000), "/");
         header("Location: index");
     }else{
         $error = "Invalid credentials";

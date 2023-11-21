@@ -48,38 +48,64 @@
 		public function schedule(){
 			return $this->data['schedule'];
 		}
+		public function referral(){
+			return $this->data['referral_link'];
+		}
+		public function referrer(){
+			return $this->data['referrer'];
+		}
 
 
 		function totalUnpaid($uid){
-			$stmt = $this->kon->prepare("SELECT SUM(price) AS sum FROM completed WHERE user_id = :uid AND status = 1 AND is_paid = 0 ");
+			$stmt = $this->kon->prepare("SELECT SUM(price) AS sum FROM completed WHERE user_id = :uid AND status = 1 AND payout_requested = 0 AND is_paid = 0 ");
 			$stmt->bindParam(":uid", $uid);
 			$stmt->execute();
 			$row = $stmt->fetch(PDO::FETCH_ASSOC);
-			echo number_format($row['sum'], 2);
+			return $row['sum'];
+		}
+
+		function canCashOut($uid){
+			if($this->totalUnpaid($uid) >= 1000){
+				return true;
+			}
+		}
+		function totalPendingPayment($uid){
+			$stmt = $this->kon->prepare("SELECT SUM(price) AS sum FROM completed WHERE user_id = :uid AND status = 1 AND payout_requested = 1 AND is_paid = 0 ");
+			$stmt->bindParam(":uid", $uid);
+			$stmt->execute();
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $row['sum'];
 		}
 		function totalPaid($uid){
 			$stmt = $this->kon->prepare("SELECT SUM(price) AS sum FROM completed WHERE user_id = :uid AND is_paid = 1 ");
 			$stmt->bindParam(":uid", $uid);
 			$stmt->execute();
 			$row = $stmt->fetch(PDO::FETCH_ASSOC);
-			echo number_format($row['sum'], 2);
+			return $row['sum'];
+		}
+
+		function setUnpaidAsPending($uid){
+			$stmt = $this->kon->prepare("UPDATE completed SET payout_requested = 1 WHERE user_id = :uid AND status = 1 AND payout_requested = 0 AND is_paid = 0 ");
+			$stmt->bindParam(":uid", $uid);
+			return $stmt->execute();
+		}
+		
+
+		function countReferred(){
+			$ref = $this->referral();
+			$stmt = $this->kon->prepare("SELECT * FROM users WHERE referrer = :refl AND ref_paid = 0");
+			$stmt->bindParam(":refl",$ref);
+			$stmt->execute();
+			$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			return $stmt->rowCount();
 		}
 
 
-
-
-		public function updateProfile($fname, $lname,$mname, $phone, $country, $city, $state, $addr, $occ, $dob){
-			$stmt = $this->kon->prepare("UPDATE uza SET firstname = :fn, lastname = :ln, middlename = :mn, dob = :dob, phone = :ph, addr = :addr, state = :st, country = :ctry, city = :cty, occupation = :occ WHERE email = :em ");
+		public function updateBank($fname, $bank, $acctno){
+			$stmt = $this->kon->prepare("UPDATE users SET fullname = :fn, bank = :ln, acct_no = :mn WHERE email = :em ");
 			$stmt->bindParam(":fn", $fname);
-			$stmt->bindParam(":ln", $lname);
-			$stmt->bindParam(":mn", $mname);
-			$stmt->bindParam(":ph", $phone);
-			$stmt->bindParam(":ctry", $country);
-			$stmt->bindParam(":cty", $city);
-			$stmt->bindParam(":st", $state);
-			$stmt->bindParam(":addr", $addr);
-			$stmt->bindParam(":occ", $occ);
-			$stmt->bindParam(":dob", $dob);
+			$stmt->bindParam(":ln", $bank);
+			$stmt->bindParam(":mn", $acctno);
 			$stmt->bindParam(":em", $this->email);
 			return $stmt->execute();
 		}
